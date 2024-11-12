@@ -57,6 +57,7 @@ public class GamePanel extends ListenerPanel {
         }
         this.repaint();
     }
+
     public void Overcheck(){
         if(controller.GameWin()){
             System.out.println("WIN!");
@@ -75,8 +76,8 @@ public class GamePanel extends ListenerPanel {
         System.out.println("Click VK_RIGHT");
         if (controller.doMove(hero.getRow(), hero.getCol(), Direction.RIGHT)) {
             this.afterMove();
-            Overcheck();
         }
+        Overcheck();
     }
 
     @Override
@@ -84,17 +85,17 @@ public class GamePanel extends ListenerPanel {
         System.out.println("Click VK_LEFT");
         if(controller.doMove(hero.getRow(), hero.getCol(), Direction.LEFT)){
             this.afterMove();
-            Overcheck();
         }
+        Overcheck();
     }
 
     @Override
     public void doMoveUp() {
         System.out.println("Click VK_Up");
-       if( controller.doMove(hero.getRow(), hero.getCol(), Direction.UP)){
+        if( controller.doMove(hero.getRow(), hero.getCol(), Direction.UP)){
            this.afterMove();
-           Overcheck();
-       }
+        }
+        Overcheck();
     }
 
     @Override
@@ -102,8 +103,8 @@ public class GamePanel extends ListenerPanel {
         System.out.println("Click VK_DOWN");
         if(controller.doMove(hero.getRow(), hero.getCol(), Direction.DOWN)){
             this.afterMove();
-            Overcheck();
         }
+        Overcheck();
     }
 
     public void afterMove() {

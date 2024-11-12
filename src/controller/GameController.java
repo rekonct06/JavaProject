@@ -2,10 +2,7 @@ package controller;
 
 import model.Direction;
 import model.MapMatrix;
-import view.game.Box;
-import view.game.GamePanel;
-import view.game.GridComponent;
-import view.game.Hero;
+import view.game.*;
 
 /**
  * It is a bridge to combine GamePanel(view) and MapMatrix(model) in one game.
@@ -85,6 +82,18 @@ public class GameController {
     }
 
     public boolean GameLose(){
+        for(int i = 0; i < model.getHeight(); i++) {
+            for (int j = 0; j < model.getWidth(); j++) {
+                if(model.getId(i, j) == 10) {
+                    int aroundblock1 = 0, aroundblock2 = 0;
+                    if (model.getId(i, j + 1) == 1) aroundblock1++;
+                    if (model.getId(i, j - 1) == 1) aroundblock1++;
+                    if (model.getId(i + 1, j) == 1) aroundblock2++;
+                    if (model.getId(i - 1, j) == 1) aroundblock2++;
+                    if (aroundblock1 > 0 && aroundblock2 > 0) return true;
+                }
+            }
+        }
         for(int i = 0; i < model.getHeight(); i++){
             for(int j = 0; j < model.getWidth(); j++){
                 if(model.getId(i, j) == 10) {
@@ -94,12 +103,6 @@ public class GameController {
                     if(model.getId(i, j+1) == 0 || model.getId(i, j+1) == 2 || model.getId(i, j+1)== 20 || model.getId(i, j+1) == 22)
                         if(model.getId(i, j-1) == 0 || model.getId(i, j-1) == 2 || model.getId(i, j-1)== 20 || model.getId(i, j-1) == 22)
                             return false;
-                    int aroundblock1=0,aroundblock2=0;
-                    if(model.getId(i,j+1) == 1 ) aroundblock1++;
-                    if(model.getId(i,j-1) == 1 ) aroundblock1++;
-                    if(model.getId(i+1,j) == 1 ) aroundblock2++;
-                    if(model.getId(i-1,j) == 1 ) aroundblock2++;
-                    if(aroundblock1>0 && aroundblock2>0) return true;
                 }
             }
         }
