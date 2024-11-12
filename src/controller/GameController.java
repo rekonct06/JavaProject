@@ -75,6 +75,38 @@ public class GameController {
         return false;
     }
 
+    public boolean GameWin(){
+        for(int i = 0; i < model.getHeight(); i++){
+            for(int j = 0; j < model.getWidth(); j++){
+                if(model.getId(i, j) == 10) return false; //有不在目的地的箱子，游戏就还未赢
+            }
+        }
+        return true;
+    }
+
+    public boolean GameLose(){
+        for(int i = 0; i < model.getHeight(); i++){
+            for(int j = 0; j < model.getWidth(); j++){
+                if(model.getId(i, j) == 10) {
+                    if(model.getId(i+1, j) == 0 || model.getId(i+1, j) == 2 || model.getId(i+1, j)== 20 || model.getId(i+1, j) == 22)
+                        if(model.getId(i-1, j) == 0 || model.getId(i-1, j) == 2 || model.getId(i-1, j)== 20|| model.getId(i-1, j) == 22)
+                            return false;
+                    if(model.getId(i, j+1) == 0 || model.getId(i, j+1) == 2 || model.getId(i, j+1)== 20 || model.getId(i, j+1) == 22)
+                        if(model.getId(i, j-1) == 0 || model.getId(i, j-1) == 2 || model.getId(i, j-1)== 20 || model.getId(i, j-1) == 22)
+                            return false;
+                    int aroundblock1=0,aroundblock2=0;
+                    if(model.getId(i,j+1) == 1 ) aroundblock1++;
+                    if(model.getId(i,j-1) == 1 ) aroundblock1++;
+                    if(model.getId(i+1,j) == 1 ) aroundblock2++;
+                    if(model.getId(i-1,j) == 1 ) aroundblock2++;
+                    if(aroundblock1>0 && aroundblock2>0) return true;
+                }
+            }
+        }
+        return true;
+    }
+
+
     //todo: add other methods such as loadGame, saveGame...
 
 }
