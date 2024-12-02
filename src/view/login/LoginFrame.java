@@ -1,10 +1,14 @@
 package view.login;
 
+import player.Player;
+import player.PlayerType;
 import view.FrameUtil;
 import view.level.LevelFrame;
 
 import javax.swing.*;
 import java.awt.*;
+
+import static player.PlayerType.LOCAL;
 
 
 public class LoginFrame extends JFrame {
@@ -12,8 +16,10 @@ public class LoginFrame extends JFrame {
     private JTextField password;
     private JButton submitBtn;
     private JButton resetBtn;
+    private JButton registerBtn;
+    private JButton visitorBtn;
     private LevelFrame levelFrame;
-
+    private static int CntPlayer = 0;
 
     public LoginFrame(int width, int height) {
         this.setTitle("Login Frame");
@@ -26,7 +32,15 @@ public class LoginFrame extends JFrame {
 
         submitBtn = FrameUtil.createButton(this, "Confirm", new Point(40, 140), 100, 40);
         resetBtn = FrameUtil.createButton(this, "Reset", new Point(160, 140), 100, 40);
+        registerBtn = FrameUtil.createButton(this, "Register", new Point(40, 200), 100, 40);
+        visitorBtn = FrameUtil.createButton(this, "Visitor", new Point(160, 200), 100, 40);
 
+        registerBtn.addActionListener(e -> {
+            System.out.println("Username = " + username.getText());
+            System.out.println("Password = " + password.getText());
+        //    Player NowPlayer = new Player(++CntPlayer, username.getText(), password.getText(), LOCAL);
+
+        });
         submitBtn.addActionListener(e -> {
             System.out.println("Username = " + username.getText());
             System.out.println("Password = " + password.getText());
