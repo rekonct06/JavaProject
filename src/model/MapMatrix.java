@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * This class is to record the map of one game. For example:
  * matrix =
@@ -17,7 +19,8 @@ package model;
  * Ten digit 2 represents the hero/player
  * So that 12 represents a box on the target location and 22 represents the player on the target location.
  */
-public class MapMatrix {
+public class MapMatrix implements Serializable {
+    public static final long serialVersionUID = 1L;
     int[][] matrix;
 
 

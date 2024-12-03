@@ -3,7 +3,7 @@ package player;
 import java.io.Serializable;
 
 
-public abstract class Player implements Serializable {
+public  class Player implements Serializable {
     public static final long serialVersionUID = 1L;
     private final int id;
     private final String name;
@@ -28,6 +28,8 @@ public abstract class Player implements Serializable {
     public String getName() {
         return this.name;
     }
+
+    public String getPassword() {return this.password;}
 
     public PlayerType getType() {
         return this.type;

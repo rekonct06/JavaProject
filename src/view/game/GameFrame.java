@@ -12,6 +12,11 @@ public class GameFrame extends JFrame {
     private GameController controller;
     private JButton restartBtn;
     private JButton loadBtn;
+    private JButton upBtn;
+    private JButton downBtn;
+    private JButton leftBtn;
+    private JButton rightBtn;
+
 
     private JLabel stepLabel;
     private GamePanel gamePanel;
@@ -25,9 +30,13 @@ public class GameFrame extends JFrame {
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapMatrix);
 
-        this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
-        this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
-        this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
+        this.upBtn=FrameUtil.createButton(this, "Up", new Point(gamePanel.getWidth() + 100, 200), 70, 50);
+        this.downBtn=FrameUtil.createButton(this, "Down", new Point(gamePanel.getWidth() + 100, 300), 70, 50);
+        this.leftBtn=FrameUtil.createButton(this, "Left", new Point(gamePanel.getWidth() + 60, 250), 70, 50);
+        this.rightBtn=FrameUtil.createButton(this, "Right", new Point(gamePanel.getWidth() + 140, 250), 70, 50);
+        this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 80), 80, 50);
+        this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 140), 80, 50);
+        this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 30), 180, 50);
         gamePanel.setStepLabel(stepLabel);
 
         this.restartBtn.addActionListener(e -> {
@@ -38,6 +47,19 @@ public class GameFrame extends JFrame {
             String string = JOptionPane.showInputDialog(this, "Input path:");
             System.out.println(string);
             gamePanel.requestFocusInWindow();//enable key listener
+        });
+
+        this.upBtn.addActionListener(e -> {
+            gamePanel.doMoveUp();
+        });
+        this.downBtn.addActionListener(e -> {
+            gamePanel.doMoveDown();
+        });
+        this.leftBtn.addActionListener(e -> {
+            gamePanel.doMoveLeft();
+        });
+        this.rightBtn.addActionListener(e -> {
+            gamePanel.doMoveRight();
         });
         //todo: add other button here
         this.setLocationRelativeTo(null);

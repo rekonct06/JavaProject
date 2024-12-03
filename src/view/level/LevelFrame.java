@@ -6,6 +6,9 @@ import view.game.GameFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class LevelFrame extends JFrame {
 
@@ -20,71 +23,120 @@ public class LevelFrame extends JFrame {
         JButton level5Btn = FrameUtil.createButton(this, "Level5", new Point(390, height / 2 - 50), 60, 60);
 
         level1Btn.addActionListener(l->{
-            MapMatrix mapMatrix = new MapMatrix(new int[][]{
-                    {1, 1, 1, 1, 1, 1},
-                    {1, 20, 0, 0, 0, 1},
-                    {1, 0, 0, 10, 2, 1},
-                    {1, 0, 2, 10, 0, 1},
-                    {1, 1, 1, 1, 1, 1},
-            });
+            MapMatrix mapMatrix =null;
+            try
+            {
+                FileInputStream fileIn = new FileInputStream("data/map/map1.ser");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                mapMatrix = (MapMatrix) in.readObject();
+                in.close();
+                fileIn.close();
+            }catch(IOException i)
+            {
+                i.printStackTrace();
+                return;
+            }catch(ClassNotFoundException c)
+            {
+                System.out.println("Map class not found");
+                c.printStackTrace();
+                return;
+            }
             GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
 
         level2Btn.addActionListener(l->{
-            MapMatrix mapMatrix = new MapMatrix(new int[][]{
-                    {1, 1, 1, 1, 1, 1, 0},
-                    {1, 20, 0, 0, 0, 1, 1},
-                    {1, 0, 10, 10, 0, 0, 1},
-                    {1, 0, 1, 2, 0, 2, 1},
-                    {1, 0, 0, 0, 0, 0, 1},
-                    {1, 1, 1, 1, 1, 1, 1},
-            });
+            MapMatrix mapMatrix =null;
+            try
+            {
+                FileInputStream fileIn = new FileInputStream("data/map/map2.ser");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                mapMatrix = (MapMatrix) in.readObject();
+                in.close();
+                fileIn.close();
+            }catch(IOException i)
+            {
+                i.printStackTrace();
+                return;
+            }catch(ClassNotFoundException c)
+            {
+                System.out.println("Map class not found");
+                c.printStackTrace();
+                return;
+            }
             GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
 
         level3Btn.addActionListener(l->{
-            MapMatrix mapMatrix = new MapMatrix(new int[][]{
-                    {0, 0, 1, 1, 1, 1, 0},
-                    {1, 1, 1, 0, 0, 1, 0},
-                    {1, 20, 0, 2, 10, 1, 1},
-                    {1, 0, 0, 0, 10, 0, 1},
-                    {1, 0, 1, 2, 0, 0, 1},
-                    {1, 0, 0, 0, 0, 0, 1},
-                    {1, 1, 1, 1, 1, 1, 1},
-            });
+            MapMatrix mapMatrix =null;
+            try
+            {
+                FileInputStream fileIn = new FileInputStream("data/map/map3.ser");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                mapMatrix = (MapMatrix) in.readObject();
+                in.close();
+                fileIn.close();
+            }catch(IOException i)
+            {
+                i.printStackTrace();
+                return;
+            }catch(ClassNotFoundException c)
+            {
+                System.out.println("Map class not found");
+                c.printStackTrace();
+                return;
+            }
             GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
 
         level4Btn.addActionListener(l->{
-            MapMatrix mapMatrix = new MapMatrix(new int[][]{
-                    {0, 1, 1, 1, 1, 1, 0},
-                    {1, 1, 20, 0, 0, 1, 1},
-                    {1, 0, 0, 1, 0, 0, 1},
-                    {1, 0, 10, 12, 10, 0, 1},
-                    {1, 0, 0, 2, 0, 0, 1},
-                    {1, 1, 0, 2, 0, 1, 1},
-                    {0, 1, 1, 1, 1, 1, 0},
-            });
+            MapMatrix mapMatrix =null;
+            try
+            {
+                FileInputStream fileIn = new FileInputStream("data/map/map4.ser");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                mapMatrix = (MapMatrix) in.readObject();
+                in.close();
+                fileIn.close();
+            }catch(IOException i)
+            {
+                i.printStackTrace();
+                return;
+            }catch(ClassNotFoundException c)
+            {
+                System.out.println("Map class not found");
+                c.printStackTrace();
+                return;
+            }
             GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
 
         level5Btn.addActionListener(l->{
-            MapMatrix mapMatrix = new MapMatrix(new int[][]{
-                    {1, 1, 1, 1, 1, 1, 0, 0},
-                    {1, 0, 0, 0, 0, 1, 1, 1},
-                    {1, 0, 0, 0, 2, 2, 0, 1},
-                    {1, 0, 10, 10, 10, 20, 0, 1},
-                    {1, 0, 0, 1, 0, 2, 0, 1},
-                    {1, 1, 1, 1, 1, 1, 1, 1},
-            });
+            MapMatrix mapMatrix =null;
+            try
+            {
+                FileInputStream fileIn = new FileInputStream("data/map/map5.ser");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                mapMatrix = (MapMatrix) in.readObject();
+                in.close();
+                fileIn.close();
+            }catch(IOException i)
+            {
+                i.printStackTrace();
+                return;
+            }catch(ClassNotFoundException c)
+            {
+                System.out.println("Map class not found");
+                c.printStackTrace();
+                return;
+            }
             GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
             this.setVisible(false);
             gameFrame.setVisible(true);
