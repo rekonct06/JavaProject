@@ -9,7 +9,7 @@ import java.io.*;
 public class Game {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-           // PlayerManager players=null;
+        //    PlayerManager players=null;
             /*
             try
             {
@@ -29,11 +29,12 @@ public class Game {
                 return;
             }
              */
-            LoginFrame loginFrame = new LoginFrame(280,280);
+            LoginFrame loginFrame = new LoginFrame(280,350);
             loginFrame.setVisible(true);
-            LevelFrame levelFrame = new LevelFrame(600,200);
+            LevelFrame levelFrame = new LevelFrame(680,200);
             levelFrame.setVisible(false);
             loginFrame.setLevelFrame(levelFrame);
+            levelFrame.setLoginFrame(loginFrame);
         });
     }
 }

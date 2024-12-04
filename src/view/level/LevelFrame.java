@@ -1,8 +1,10 @@
 package view.level;
 
 import model.MapMatrix;
+import player.PlayerManager;
 import view.FrameUtil;
 import view.game.GameFrame;
+import view.login.LoginFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +13,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 public class LevelFrame extends JFrame {
-
+    private String NowName;
+    private LoginFrame loginFrame;
+    private PlayerManager playerManager;
     public LevelFrame(int width, int height) {
         this.setTitle("Level");
         this.setLayout(null);
@@ -41,7 +45,10 @@ public class LevelFrame extends JFrame {
                 c.printStackTrace();
                 return;
             }
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix,playerManager, NowName);
+            gameFrame.setPlayerName(NowName);
+            gameFrame.setPlayerManager(this.playerManager);
+            gameFrame.setLevelFrame(this);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -65,7 +72,10 @@ public class LevelFrame extends JFrame {
                 c.printStackTrace();
                 return;
             }
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, playerManager, NowName);
+            gameFrame.setPlayerName(this.NowName);
+            gameFrame.setPlayerManager(this.playerManager);
+            gameFrame.setLevelFrame(this);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -89,7 +99,10 @@ public class LevelFrame extends JFrame {
                 c.printStackTrace();
                 return;
             }
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix,playerManager, NowName);
+            gameFrame.setPlayerName(this.NowName);
+            gameFrame.setPlayerManager(this.playerManager);
+            gameFrame.setLevelFrame(this);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -113,7 +126,10 @@ public class LevelFrame extends JFrame {
                 c.printStackTrace();
                 return;
             }
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix,playerManager, NowName);
+            gameFrame.setPlayerName(this.NowName);
+            gameFrame.setPlayerManager(this.playerManager);
+            gameFrame.setLevelFrame(this);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -137,7 +153,10 @@ public class LevelFrame extends JFrame {
                 c.printStackTrace();
                 return;
             }
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix,playerManager, NowName);
+            gameFrame.setPlayerName(this.NowName);
+            gameFrame.setPlayerManager(this.playerManager);
+            gameFrame.setLevelFrame(this);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -148,4 +167,93 @@ public class LevelFrame extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
+    public void setNowName(String NName){
+        this.NowName=NName;
+    }
+    public String getNowName(){
+        return this.NowName;
+    }
+
+    public void setLoginFrame(LoginFrame loginFrame){
+        this.loginFrame=loginFrame;
+    }
+
+    public void setPlayerManager(PlayerManager playerManager){
+        this.playerManager = playerManager;
+        if(this.playerManager==null) System.out.println("Player manager is null");
+    }
+
 }
+
+/*
+level1Btn.addActionListener(l->{
+            MapMatrix mapMatrix = new MapMatrix(new int[][]{
+                    {1, 1, 1, 1, 1, 1},
+                    {1, 20, 0, 0, 0, 1},
+                    {1, 0, 0, 10, 2, 1},
+                    {1, 0, 2, 10, 0, 1},
+                    {1, 1, 1, 1, 1, 1},
+            });
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            this.setVisible(false);
+            gameFrame.setVisible(true);
+        });
+
+        level2Btn.addActionListener(l->{
+            MapMatrix mapMatrix = new MapMatrix(new int[][]{
+                    {1, 1, 1, 1, 1, 1, 0},
+                    {1, 20, 0, 0, 0, 1, 1},
+                    {1, 0, 10, 10, 0, 0, 1},
+                    {1, 0, 1, 2, 0, 2, 1},
+                    {1, 0, 0, 0, 0, 0, 1},
+                    {1, 1, 1, 1, 1, 1, 1},
+            });
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            this.setVisible(false);
+            gameFrame.setVisible(true);
+        });
+
+        level3Btn.addActionListener(l->{
+            MapMatrix mapMatrix = new MapMatrix(new int[][]{
+                    {0, 0, 1, 1, 1, 1, 0},
+                    {1, 1, 1, 0, 0, 1, 0},
+                    {1, 20, 0, 2, 10, 1, 1},
+                    {1, 0, 0, 0, 10, 0, 1},
+                    {1, 0, 1, 2, 0, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 1},
+                    {1, 1, 1, 1, 1, 1, 1},
+            });
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            this.setVisible(false);
+            gameFrame.setVisible(true);
+        });
+
+        level4Btn.addActionListener(l->{
+            MapMatrix mapMatrix = new MapMatrix(new int[][]{
+                    {0, 1, 1, 1, 1, 1, 0},
+                    {1, 1, 20, 0, 0, 1, 1},
+                    {1, 0, 0, 1, 0, 0, 1},
+                    {1, 0, 10, 12, 10, 0, 1},
+                    {1, 0, 0, 2, 0, 0, 1},
+                    {1, 1, 0, 2, 0, 1, 1},
+                    {0, 1, 1, 1, 1, 1, 0},
+            });
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            this.setVisible(false);
+            gameFrame.setVisible(true);
+        });
+
+        level5Btn.addActionListener(l->{
+            MapMatrix mapMatrix = new MapMatrix(new int[][]{
+                    {1, 1, 1, 1, 1, 1, 0, 0},
+                    {1, 0, 0, 0, 0, 1, 1, 1},
+                    {1, 0, 0, 0, 2, 2, 0, 1},
+                    {1, 0, 10, 10, 10, 20, 0, 1},
+                    {1, 0, 0, 1, 0, 2, 0, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 1},
+            });
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            this.setVisible(false);
+            gameFrame.setVisible(true);
+        });
+ */

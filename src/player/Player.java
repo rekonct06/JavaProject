@@ -9,7 +9,7 @@ public  class Player implements Serializable {
     private final String name;
     private final String password;
     protected final PlayerType type;
-    private static int hasWin;
+    private int hasWin;
 
     public Player(int id, String name, String password,PlayerType type) {
         this.id = id;

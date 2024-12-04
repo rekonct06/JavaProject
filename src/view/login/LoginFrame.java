@@ -21,9 +21,11 @@ public class LoginFrame extends JFrame {
     private JButton resetBtn;
     private JButton registerBtn;
     private JButton visitorBtn;
+    private JButton rankwinBtn;
     private LevelFrame levelFrame;
-    private PlayerManager players;
+    private PlayerManager Manager;
     private static Player NowPlayer;
+    private String NowName;
 
     public LoginFrame(int width, int height) {
         this.setTitle("Login Frame");
@@ -38,12 +40,14 @@ public class LoginFrame extends JFrame {
         resetBtn = FrameUtil.createButton(this, "Reset", new Point(160, 140), 100, 40);
         registerBtn = FrameUtil.createButton(this, "Register", new Point(40, 200), 100, 40);
         visitorBtn = FrameUtil.createButton(this, "Visitor", new Point(160, 200), 100, 40);
+        rankwinBtn = FrameUtil.createButton(this, "Rank", new Point(40, 260), 100, 40);
+
 
         try
         {
             FileInputStream fileIn = new FileInputStream("data/user/PlayerManager.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            players = (PlayerManager) in.readObject();
+            Manager = (PlayerManager) in.readObject();
             in.close();
             fileIn.close();
         }catch(IOException i)
@@ -56,24 +60,41 @@ public class LoginFrame extends JFrame {
             c.printStackTrace();
             return;
         }
+        if(Manager==null)Manager=new PlayerManager();
+
 
         registerBtn.addActionListener(e -> {
             System.out.println("Username = " + username.getText());
             System.out.println("Password = " + password.getText());
-            NowPlayer = new Player(players.getCntPlayer()+1, username.getText(), password.getText(), LOCAL);
-            players.addPlayer(NowPlayer);
-            players.updateData();
-            if (this.levelFrame != null) {
-                this.levelFrame.setVisible(true);
-                this.setVisible(false);
+            boolean findplayer = false;
+            for(Player iplayer : Manager.getPlayers()){
+                if(iplayer.getName().equals(username.getText())){
+                    findplayer = true;
+                }
+            }
+            if(!findplayer){
+                NowPlayer = new Player(Manager.getCntPlayer()+1, username.getText(), password.getText(), LOCAL);
+                Manager.addPlayer(NowPlayer);
+                Manager.updateData();
+                this.setNowName(username.getText());
+                if (this.levelFrame != null) {
+                    this.levelFrame.setNowName(NowName);
+                    this.levelFrame.setPlayerManager(Manager);
+                    this.levelFrame.setVisible(true);
+                    this.setVisible(false);
+                }
+            }
+            else{
+                System.out.println("Player already exists");
             }
         });
+
         submitBtn.addActionListener(e -> {
             System.out.println("Username = " + username.getText());
             System.out.println("Password = " + password.getText());
             boolean findplayer = false;
             boolean CorPass=false;
-            for(Player iplayer : players.getPlayers()){
+            for(Player iplayer : Manager.getPlayers()){
                 if(iplayer.getName().equals(username.getText())){
                     findplayer = true;
                     if(iplayer.getPassword().equals(password.getText())){CorPass = true;}
@@ -83,7 +104,10 @@ public class LoginFrame extends JFrame {
             else{
                 if(!CorPass){System.out.println("Password does not match");    }
                 else{
+                    this.setNowName(username.getText());
                     if (this.levelFrame != null) {
+                        this.levelFrame.setNowName(NowName);
+                        this.levelFrame.setPlayerManager(Manager);
                         this.levelFrame.setVisible(true);
                         this.setVisible(false);
                     }
@@ -96,7 +120,9 @@ public class LoginFrame extends JFrame {
         visitorBtn.addActionListener(e -> {
             System.out.println("You are a visitor");
             NowPlayer = new Player(0, "Visitor", "Visitor", VISITOR);
+            this.setNowName("Visitor");
             if (this.levelFrame != null) {
+                this.levelFrame.setNowName("Visitor");
                 this.levelFrame.setVisible(true);
                 this.setVisible(false);
             }
@@ -106,11 +132,45 @@ public class LoginFrame extends JFrame {
             password.setText("");
         });
 
+        rankwinBtn.addActionListener(e -> {
+            Manager.sortPlayersByWins();
+            JDialog dialog = new JDialog(this, "Ranking", true);  // true: modal dialog
+            dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));  // 垂直布局
+
+            // 遍历排序后的玩家列表并构建JLabel显示文本
+            for (Player player : Manager.getPlayers()) {
+                String playerInfo = player.getName() + ": Wins = " + player.gethasWin();
+                dialog.add(new JLabel(playerInfo));
+            }
+
+            // 添加关闭按钮
+            JButton closeButton = new JButton("Close");
+            closeButton.addActionListener(ev -> dialog.dispose());  // 关闭对话框
+            dialog.add(closeButton);
+
+            dialog.setSize(250, 200);
+            dialog.setLocationRelativeTo(this);  // 将弹窗定位在主窗口中心
+            dialog.setVisible(true);
+        });
+
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
+
+
     public void setLevelFrame(LevelFrame levelFrame) {
         this.levelFrame = levelFrame;
+    }
+
+    public LevelFrame getLevelFrame() {
+        return this.levelFrame;
+    }
+
+    public String getNowName() {
+        return this.NowName;
+    }
+    public void setNowName(String nowName) {
+        this.NowName = nowName;
     }
 }

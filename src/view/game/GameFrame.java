@@ -2,10 +2,14 @@ package view.game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Set;
 
 import controller.GameController;
 import model.MapMatrix;
+import player.Player;
+import player.PlayerManager;
 import view.FrameUtil;
+import view.level.LevelFrame;
 
 public class GameFrame extends JFrame {
 
@@ -16,26 +20,37 @@ public class GameFrame extends JFrame {
     private JButton downBtn;
     private JButton leftBtn;
     private JButton rightBtn;
+    private JButton quitBtn;
 
 
     private JLabel stepLabel;
     private GamePanel gamePanel;
 
-    public GameFrame(int width, int height, MapMatrix mapMatrix) {
+    private LevelFrame levelFrame;
+    private PlayerManager playerManager;
+    private String PlayerName;
+
+    public GameFrame(int width, int height, MapMatrix mapMatrix, PlayerManager playerManager,String playerName) {
         this.setTitle("2024 CS109 Project Demo");
         this.setLayout(null);
-        this.setSize(width, height);
+        this.setSize(width+50, height+50);
         gamePanel = new GamePanel(mapMatrix);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
+        gamePanel.setGameFrame(this);
+        gamePanel.setPlayerManager(playerManager);
+        gamePanel.setPlayerName(playerName);
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapMatrix);
 
-        this.upBtn=FrameUtil.createButton(this, "Up", new Point(gamePanel.getWidth() + 100, 200), 70, 50);
-        this.downBtn=FrameUtil.createButton(this, "Down", new Point(gamePanel.getWidth() + 100, 300), 70, 50);
-        this.leftBtn=FrameUtil.createButton(this, "Left", new Point(gamePanel.getWidth() + 60, 250), 70, 50);
-        this.rightBtn=FrameUtil.createButton(this, "Right", new Point(gamePanel.getWidth() + 140, 250), 70, 50);
+        this.upBtn=FrameUtil.createButton(this, "Up", new Point(gamePanel.getWidth() + 100, 250), 70, 50);
+        this.downBtn=FrameUtil.createButton(this, "Down", new Point(gamePanel.getWidth() + 100, 350), 70, 50);
+        this.leftBtn=FrameUtil.createButton(this, "Left", new Point(gamePanel.getWidth() + 60, 300), 70, 50);
+        this.rightBtn=FrameUtil.createButton(this, "Right", new Point(gamePanel.getWidth() + 140, 300), 70, 50);
+
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 80), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 140), 80, 50);
+        this.quitBtn = FrameUtil.createButton(this, "Menu", new Point(gamePanel.getWidth() + 80, 200), 80, 50);
+
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 30), 180, 50);
         gamePanel.setStepLabel(stepLabel);
 
@@ -44,26 +59,91 @@ public class GameFrame extends JFrame {
             gamePanel.requestFocusInWindow();//enable key listener
         });
         this.loadBtn.addActionListener(e -> {
+            if(playerName.equals("Visitor")) {
+                JDialog dialog = new JDialog(this, "Sorry!", true);  // true: modal dialog
+                dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));  // 垂直布局
+
+                dialog.add(new JLabel("Visitor cannot save a load"));
+
+                // 添加关闭按钮
+                JButton closeButton = new JButton("Close");
+                closeButton.addActionListener(ev -> dialog.dispose());  // 关闭对话框
+                dialog.add(closeButton);
+
+                dialog.setSize(250, 100);
+                dialog.setLocationRelativeTo(this);  // 将弹窗定位在主窗口中心
+                dialog.setVisible(true);
+            }
+            else{
+
+            }
+            /* 这是原版自定义存档路径的代码，我将改成可以选择存档窗口的模式
             String string = JOptionPane.showInputDialog(this, "Input path:");
             System.out.println(string);
             gamePanel.requestFocusInWindow();//enable key listener
+             */
         });
 
         this.upBtn.addActionListener(e -> {
             gamePanel.doMoveUp();
+            gamePanel.requestFocusInWindow();
         });
         this.downBtn.addActionListener(e -> {
             gamePanel.doMoveDown();
+            gamePanel.requestFocusInWindow();
         });
         this.leftBtn.addActionListener(e -> {
             gamePanel.doMoveLeft();
+            gamePanel.requestFocusInWindow();
         });
         this.rightBtn.addActionListener(e -> {
             gamePanel.doMoveRight();
+            gamePanel.requestFocusInWindow();
         });
+
+        this.quitBtn.addActionListener(e -> {
+            if(!playerName.equals("Visitor")){
+
+            }
+            this.levelFrame.setVisible(true);
+            this.dispose();
+        });
+
         //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
+
+    public void WinDialog(){
+        JDialog dialog = new JDialog(this, "Congratulations!", true);  // true: modal dialog
+        dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));  // 设置对齐方式和组件间距
+        dialog.add(new JLabel("You win!"));
+        JButton closeButton = new JButton("Back To Menu");
+        closeButton.addActionListener(ev -> {
+            dialog.dispose();
+            this.levelFrame.setVisible(true);
+            this.dispose();
+        });  // 关闭对话框
+        dialog.add(closeButton);
+        dialog.setSize(250, 150);
+        dialog.setLocationRelativeTo(this);  // 将弹窗定位在主窗口中心
+        dialog.setVisible(true);
+    }
+
+    public String getPlayerName(){
+        return this.PlayerName;
+    }
+    public void setPlayerName(String playerName){
+        this.PlayerName = playerName;
+    }
+
+    public void setLevelFrame(LevelFrame levelFrame){
+        this.levelFrame = levelFrame;
+    }
+
+    public void setPlayerManager(PlayerManager playerManager){
+        this.playerManager = playerManager;
+    }
+
 
 }

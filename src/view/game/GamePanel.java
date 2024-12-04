@@ -3,6 +3,7 @@ package view.game;
 import controller.GameController;
 import model.Direction;
 import model.MapMatrix;
+import player.PlayerManager;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -23,6 +24,9 @@ public class GamePanel extends ListenerPanel {
 
     private Hero hero;
 
+    private PlayerManager playerManager;
+    private String PlayerName;
+    private GameFrame gameFrame;
 
     public GamePanel(MapMatrix model) {
         this.setVisible(true);
@@ -61,6 +65,11 @@ public class GamePanel extends ListenerPanel {
     public void Overcheck(){
         if(controller.GameWin()){
             System.out.println("WIN!");
+            gameFrame.WinDialog();
+            if(!PlayerName.equals("Visitor")){
+                playerManager.PlayerWin(this.PlayerName);
+                playerManager.updateData();
+            }
             //有待完善
         }
         else{
@@ -124,5 +133,18 @@ public class GamePanel extends ListenerPanel {
 
     public GridComponent getGridComponent(int row, int col) {
         return grids[row][col];
+    }
+
+
+    public void setPlayerManager(PlayerManager playerManager){
+        this.playerManager = playerManager;
+    }
+
+    public void setPlayerName(String playerName){
+        this.PlayerName = playerName;
+    }
+
+    public void setGameFrame(GameFrame gameFrame){
+        this.gameFrame = gameFrame;
     }
 }
