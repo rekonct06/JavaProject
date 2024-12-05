@@ -98,4 +98,8 @@ public class GridComponent extends JComponent {
         this.repaint();
         return b;
     }
+
+    public void reset(){
+
+    }
 }

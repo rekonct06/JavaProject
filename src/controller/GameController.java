@@ -2,6 +2,7 @@ package controller;
 
 import model.Direction;
 import model.MapMatrix;
+import save.MapSave;
 import view.game.*;
 
 /**
@@ -20,6 +21,25 @@ public class GameController {
 
     public void restartGame() {
         System.out.println("Do restart game here");
+        view.resetStep();
+        changeModelto(view.getOriginalModel());
+        /*
+        int herorow,herocnt
+        for (int i = 0; i < model.getHeight(); i++) {
+            for (int j = 0; j < model.getWidth(); j++) {
+                if(model.getId(i,j)/10==2){
+                    GridComponent currentGrid = view.getGridComponent(i, j);
+                    Hero h = currentGrid.removeHeroFromGrid();
+                    targetGrid.setHeroInGrid(h);
+                    //Update the row and column attribute in hero
+                    h.setRow(tRow);
+                    h.setCol(tCol);
+                }
+            }
+            System.out.println();
+        }
+        */
+    //    view.initialGame();
     }
 
     public boolean doMove(int row, int col, Direction direction) {
@@ -70,6 +90,36 @@ public class GameController {
             }
         }
         return false;
+    }
+
+    public void changeModelto(MapSave toMap) {
+        MapSave now=new MapSave(model);
+        if(now.getBoxCnt()!=toMap.getBoxCnt()){
+            System.out.println("Numbers of Boxes not equal!");
+            return;
+        }
+
+        GridComponent iGird = view.getGridComponent(now.getHeroRow(), now.getHeroCol());
+        GridComponent targetGird = view.getGridComponent(toMap.getHeroRow(), toMap.getHeroCol());
+        Hero h=iGird.removeHeroFromGrid();
+        targetGird.setHeroInGrid(h);
+        h.setRow(targetGird.getRow());
+        h.setCol(targetGird.getCol());
+
+        for(int i=0;i<now.getBoxCnt();i++){
+            iGird = view.getGridComponent(now.getBoxes()[i][0], now.getBoxes()[i][1]);
+            targetGird = view.getGridComponent(toMap.getBoxes()[i][0], toMap.getBoxes()[i][1]);
+            Box b = iGird.removeBoxFromGrid();
+            targetGird.setBoxInGrid(b);
+            b.setRow(targetGird.getRow());
+            b.setCol(targetGird.getCol());
+        }
+
+        for(int i=0;i<model.getHeight();i++){
+            for(int j=0;j<model.getWidth();j++){
+                model.getMatrix()[i][j] = toMap.getMatrix()[i][j];
+            }
+        }
     }
 
     public boolean GameWin(){

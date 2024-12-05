@@ -4,6 +4,7 @@ import controller.GameController;
 import model.Direction;
 import model.MapMatrix;
 import player.PlayerManager;
+import save.MapSave;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -17,6 +18,7 @@ public class GamePanel extends ListenerPanel {
 
     private GridComponent[][] grids;
     private MapMatrix model;
+    private MapSave originalModel;
     private GameController controller;
     private JLabel stepLabel;
     private int steps;
@@ -34,12 +36,20 @@ public class GamePanel extends ListenerPanel {
         this.setLayout(null);
         this.setSize(model.getWidth() * GRID_SIZE + 4, model.getHeight() * GRID_SIZE + 4);
         this.model = model;
+        int[][] tem=new int[model.getWidth()][model.getHeight()];
+        for(int i=0;i<model.getWidth();i++){
+            for(int j=0;j<model.getHeight();j++){
+                tem[i][j]=model.getMatrix()[i][j];
+            }
+        }
+        this.originalModel = new MapSave(new MapMatrix(tem));
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
         initialGame();
 
     }
 
     public void initialGame() {
+
         this.steps = 0;
         for (int i = 0; i < grids.length; i++) {
             for (int j = 0; j < grids[i].length; j++) {
@@ -126,7 +136,6 @@ public class GamePanel extends ListenerPanel {
     }
 
 
-
     public void setController(GameController controller) {
         this.controller = controller;
     }
@@ -135,6 +144,10 @@ public class GamePanel extends ListenerPanel {
         return grids[row][col];
     }
 
+    public void resetStep(){
+        this.steps = 0;
+        this.stepLabel.setText("Start");
+    }
 
     public void setPlayerManager(PlayerManager playerManager){
         this.playerManager = playerManager;
@@ -146,5 +159,9 @@ public class GamePanel extends ListenerPanel {
 
     public void setGameFrame(GameFrame gameFrame){
         this.gameFrame = gameFrame;
+    }
+
+    public MapSave getOriginalModel() {
+        return originalModel;
     }
 }
