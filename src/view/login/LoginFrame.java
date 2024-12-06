@@ -62,6 +62,15 @@ public class LoginFrame extends JFrame {
         }
         if(Manager==null)Manager=new PlayerManager();
 
+        /*
+        for(Player i:Manager.getPlayers()){
+            i.setLoads(null);
+            i.setCntload(0);
+        }
+
+        Manager.updateData();
+
+         */
 
         registerBtn.addActionListener(e -> {
             System.out.println("Username = " + username.getText());

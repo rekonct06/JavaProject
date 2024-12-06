@@ -23,23 +23,6 @@ public class GameController {
         System.out.println("Do restart game here");
         view.resetStep();
         changeModelto(view.getOriginalModel());
-        /*
-        int herorow,herocnt
-        for (int i = 0; i < model.getHeight(); i++) {
-            for (int j = 0; j < model.getWidth(); j++) {
-                if(model.getId(i,j)/10==2){
-                    GridComponent currentGrid = view.getGridComponent(i, j);
-                    Hero h = currentGrid.removeHeroFromGrid();
-                    targetGrid.setHeroInGrid(h);
-                    //Update the row and column attribute in hero
-                    h.setRow(tRow);
-                    h.setCol(tCol);
-                }
-            }
-            System.out.println();
-        }
-        */
-    //    view.initialGame();
     }
 
     public boolean doMove(int row, int col, Direction direction) {

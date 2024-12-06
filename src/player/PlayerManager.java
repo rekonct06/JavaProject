@@ -1,5 +1,7 @@
 package player;
 
+import save.LoadSave;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -39,6 +41,34 @@ public class PlayerManager implements Serializable {
                 break;
             }
         }
+    }
+
+    public void AddLoadto(String username, LoadSave iload){
+        for(Player iplayer : players) {
+            if(iplayer.getName().equals(username)){
+                iplayer.newload(iload);
+                break;
+            }
+        }
+    }
+
+    public int getloadnum(String username){
+        for(Player iplayer : players) {
+            if(iplayer.getName().equals(username)){
+                return iplayer.getCntload();
+            }
+        }
+        return 0;
+    }
+
+    public LoadSave getloadofid(String username,int lid){
+        for(Player iplayer : players) {
+            if(iplayer.getName().equals(username)){
+                if(lid<3)return iplayer.getLoads().get(lid);
+                else return null;
+            }
+        }
+        return null;
     }
 
     public void sortPlayersByWins() {

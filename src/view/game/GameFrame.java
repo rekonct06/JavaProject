@@ -8,6 +8,8 @@ import controller.GameController;
 import model.MapMatrix;
 import player.Player;
 import player.PlayerManager;
+import save.LoadSave;
+import save.MapSave;
 import view.FrameUtil;
 import view.level.LevelFrame;
 
@@ -30,17 +32,29 @@ public class GameFrame extends JFrame {
     private PlayerManager playerManager;
     private String PlayerName;
 
-    public GameFrame(int width, int height, MapMatrix mapMatrix, PlayerManager playerManager,String playerName) {
+    private LoadSave loadSave;
+
+    public GameFrame(int width, int height, MapMatrix mapMatrix, MapSave orimapsave, LoadSave loadSave ,PlayerManager playerManager, String playerName) {
         this.setTitle("2024 CS109 Project Demo");
         this.setLayout(null);
         this.setSize(width+50, height+50);
-        gamePanel = new GamePanel(mapMatrix);
+        this.loadSave = loadSave;
+        this.playerManager = playerManager;
+        this.PlayerName = playerName;
+
+        this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point((mapMatrix.getWidth() * 50 + 4) + 80, 30), 180, 50);
+    //    gamePanel.setStepLabel(stepLabel);
+
+        gamePanel = new GamePanel(mapMatrix, orimapsave ,this, loadSave, stepLabel);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         gamePanel.setGameFrame(this);
         gamePanel.setPlayerManager(playerManager);
         gamePanel.setPlayerName(playerName);
         this.add(gamePanel);
-        this.controller = new GameController(gamePanel, mapMatrix);
+
+        this.setController(gamePanel.getController());
+
+    //    this.controller = new GameController(gamePanel, mapMatrix);
 
         this.upBtn=FrameUtil.createButton(this, "Up", new Point(gamePanel.getWidth() + 100, 250), 70, 50);
         this.downBtn=FrameUtil.createButton(this, "Down", new Point(gamePanel.getWidth() + 100, 350), 70, 50);
@@ -51,8 +65,6 @@ public class GameFrame extends JFrame {
         this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 140), 80, 50);
         this.quitBtn = FrameUtil.createButton(this, "Menu", new Point(gamePanel.getWidth() + 80, 200), 80, 50);
 
-        this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 30), 180, 50);
-        gamePanel.setStepLabel(stepLabel);
 
         this.restartBtn.addActionListener(e -> {
             controller.restartGame();
@@ -75,6 +87,17 @@ public class GameFrame extends JFrame {
                 dialog.setVisible(true);
             }
             else{
+                /*
+                MapMatrix mapa=loadSave.getimap(0).getMapMatrix();
+                for(int i=0;i<mapa.getHeight();i++){
+                    for(int j=0;j<mapa.getWidth();j++){
+                        System.out.printf("%d ",mapa.getId(i,j));
+                    }
+                    System.out.println();
+                }
+                */
+                playerManager.AddLoadto(PlayerName,loadSave);
+                playerManager.updateData();
 
             }
             /* 这是原版自定义存档路径的代码，我将改成可以选择存档窗口的模式
@@ -145,5 +168,8 @@ public class GameFrame extends JFrame {
         this.playerManager = playerManager;
     }
 
+    public void setController(GameController controller) {
+        this.controller = controller;
+    }
 
 }

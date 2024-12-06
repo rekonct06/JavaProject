@@ -4,7 +4,9 @@ import controller.GameController;
 import model.Direction;
 import model.MapMatrix;
 import player.PlayerManager;
+import save.LoadSave;
 import save.MapSave;
+import view.FrameUtil;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -29,22 +31,61 @@ public class GamePanel extends ListenerPanel {
     private PlayerManager playerManager;
     private String PlayerName;
     private GameFrame gameFrame;
+    private LoadSave loadSave;
 
-    public GamePanel(MapMatrix model) {
+    public GamePanel(MapMatrix model, MapSave originalModel, GameFrame gameFrame, LoadSave loadSave ,JLabel stepLabel) {
         this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
         this.setSize(model.getWidth() * GRID_SIZE + 4, model.getHeight() * GRID_SIZE + 4);
-        this.model = model;
-        int[][] tem=new int[model.getWidth()][model.getHeight()];
-        for(int i=0;i<model.getWidth();i++){
-            for(int j=0;j<model.getHeight();j++){
-                tem[i][j]=model.getMatrix()[i][j];
-            }
+        this.stepLabel = stepLabel;
+        this.gameFrame = gameFrame;
+
+        this.controller = new GameController(this, model);
+        if(loadSave.getmapnum()==0){
+            this.model = model;
+            this.originalModel = originalModel;
+            this.loadSave = loadSave;
+            this.loadSave.addmap(originalModel);
+            this.grids = new GridComponent[model.getHeight()][model.getWidth()];
+            initialGame();
         }
-        this.originalModel = new MapSave(new MapMatrix(tem));
-        this.grids = new GridComponent[model.getHeight()][model.getWidth()];
-        initialGame();
+        else{
+            this.model=model;
+            this.originalModel=originalModel;
+            this.loadSave=loadSave;
+            this.grids = new GridComponent[model.getHeight()][model.getWidth()];
+            initialGame();
+            /*
+            JButton dobtn=FrameUtil.createButton(this.gameFrame, "Up", new Point(0, 0), 20, 20);
+            MapSave imap=loadSave.getimap(1);
+            dobtn.addActionListener(e -> {
+                controller.changeModelto(imap);
+                afterMove();
+            });
+            imap=loadSave.getimap(2);
+            dobtn.addActionListener(e -> {
+                controller.changeModelto(imap);
+                afterMove();
+            });
+            */
+            int cnt=0;
+            for(int i=1;i<loadSave.getmapnum();i++){
+                MapSave imap=loadSave.getimap(i);
+                controller.changeModelto(imap);
+                afterMove();
+                cnt++;
+            //    if(cnt==4)break;
+                this.repaint();
+                try {
+                    Thread.sleep(10);     //设置暂停的时间，0.2秒
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
 
     }
 
@@ -95,6 +136,13 @@ public class GamePanel extends ListenerPanel {
         System.out.println("Click VK_RIGHT");
         if (controller.doMove(hero.getRow(), hero.getCol(), Direction.RIGHT)) {
             this.afterMove();
+            int[][] temmat=new int[model.getHeight()][model.getWidth()];
+            for(int i=0;i<model.getHeight();i++){
+                for(int j=0;j<model.getWidth();j++){
+                    temmat[i][j]=model.getId(i,j);
+                }
+            }
+            loadSave.addmap(new MapSave(new MapMatrix(temmat)));
         }
         Overcheck();
     }
@@ -104,6 +152,13 @@ public class GamePanel extends ListenerPanel {
         System.out.println("Click VK_LEFT");
         if(controller.doMove(hero.getRow(), hero.getCol(), Direction.LEFT)){
             this.afterMove();
+            int[][] temmat=new int[model.getHeight()][model.getWidth()];
+            for(int i=0;i<model.getHeight();i++){
+                for(int j=0;j<model.getWidth();j++){
+                    temmat[i][j]=model.getId(i,j);
+                }
+            }
+            loadSave.addmap(new MapSave(new MapMatrix(temmat)));
         }
         Overcheck();
     }
@@ -113,6 +168,13 @@ public class GamePanel extends ListenerPanel {
         System.out.println("Click VK_Up");
         if( controller.doMove(hero.getRow(), hero.getCol(), Direction.UP)){
            this.afterMove();
+            int[][] temmat=new int[model.getHeight()][model.getWidth()];
+            for(int i=0;i<model.getHeight();i++){
+                for(int j=0;j<model.getWidth();j++){
+                    temmat[i][j]=model.getId(i,j);
+                }
+            }
+            loadSave.addmap(new MapSave(new MapMatrix(temmat)));
         }
         Overcheck();
     }
@@ -122,6 +184,13 @@ public class GamePanel extends ListenerPanel {
         System.out.println("Click VK_DOWN");
         if(controller.doMove(hero.getRow(), hero.getCol(), Direction.DOWN)){
             this.afterMove();
+            int[][] temmat=new int[model.getHeight()][model.getWidth()];
+            for(int i=0;i<model.getHeight();i++){
+                for(int j=0;j<model.getWidth();j++){
+                    temmat[i][j]=model.getId(i,j);
+                }
+            }
+            loadSave.addmap(new MapSave(new MapMatrix(temmat)));
         }
         Overcheck();
     }
@@ -138,6 +207,10 @@ public class GamePanel extends ListenerPanel {
 
     public void setController(GameController controller) {
         this.controller = controller;
+    }
+
+    public GameController getController() {
+        return controller;
     }
 
     public GridComponent getGridComponent(int row, int col) {

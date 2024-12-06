@@ -1,6 +1,10 @@
 package player;
 
+import save.LoadSave;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public  class Player implements Serializable {
@@ -10,12 +14,17 @@ public  class Player implements Serializable {
     private final String password;
     protected final PlayerType type;
     private int hasWin;
+    private int Cntload;
+    private List<LoadSave> loads;
 
     public Player(int id, String name, String password,PlayerType type) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.type = type;
+        this.hasWin = 0;
+        this.Cntload = 0;
+        this.loads = new ArrayList<LoadSave>();
     }
 
     public void onNotify() {
@@ -39,26 +48,32 @@ public  class Player implements Serializable {
         this.hasWin++;
     }
 
+    public int getCntload() {
+        return this.Cntload;
+    }
+
     public int gethasWin() {
         return this.hasWin;
+    }
+
+    public void setCntload(int Cntload) {
+        this.Cntload = Cntload;
     }
 
     public void revive() {
         this.hasWin = 0;
     }
 
-/*    public void surrender() {
-        Game.performAction(new SurrenderAction(this));
+    public List<LoadSave> getLoads() {
+        return this.loads;
+    }
+    public void setLoads(List<LoadSave> loads) {
+        this.loads = loads;
     }
 
-    protected static Player playerFactory(int id, String name, PlayerType type) {
-        Object res;
-        if (type == PlayerType.AI) {
-            res = AIPlayer.getAIPlayer(id, name);
-        } else {
-            res = new LocalPlayer(id, name);
-        }
-
-        return (Player)res;
-    }*/
+    public void newload(LoadSave load){
+        if(this.loads==null)this.loads=new ArrayList<LoadSave>();
+        this.loads.add(load);
+        this.Cntload++;
+    }
 }

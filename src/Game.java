@@ -31,7 +31,7 @@ public class Game {
              */
             LoginFrame loginFrame = new LoginFrame(280,350);
             loginFrame.setVisible(true);
-            LevelFrame levelFrame = new LevelFrame(680,200);
+            LevelFrame levelFrame = new LevelFrame(680,300);
             levelFrame.setVisible(false);
             loginFrame.setLevelFrame(levelFrame);
             levelFrame.setLoginFrame(loginFrame);
