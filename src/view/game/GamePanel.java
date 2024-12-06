@@ -237,4 +237,8 @@ public class GamePanel extends ListenerPanel {
     public MapSave getOriginalModel() {
         return originalModel;
     }
+
+    public void loadreset(){
+        this.loadSave.resetwith(originalModel);
+    }
 }

@@ -22,6 +22,7 @@ public class GameController {
     public void restartGame() {
         System.out.println("Do restart game here");
         view.resetStep();
+        view.loadreset();
         changeModelto(view.getOriginalModel());
     }
 
