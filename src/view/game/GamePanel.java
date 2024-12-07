@@ -7,10 +7,12 @@ import player.PlayerManager;
 import save.LoadSave;
 import save.MapSave;
 import view.FrameUtil;
+import view.sound.AudioPlayer;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.concurrent.Future;
 
 /**
  * It is the subclass of ListenerPanel, so that it should implement those four methods: do move left, up, down ,right.
@@ -205,6 +207,10 @@ public class GamePanel extends ListenerPanel {
     }
 
     public void afterMove() {
+        // 调用 playSound 方法来播放音效
+        String soundPath = "data/sound/short.wav";
+        Future<?> future = AudioPlayer.playSound(soundPath);
+
         this.steps++;
         this.stepLabel.setText(String.format("Step: %d", this.steps));
     }

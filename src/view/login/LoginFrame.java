@@ -5,10 +5,12 @@ import player.PlayerManager;
 import player.PlayerType;
 import view.FrameUtil;
 import view.level.LevelFrame;
+import view.sound.AudioPlayer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.util.concurrent.Future;
 
 import static player.PlayerType.LOCAL;
 import static player.PlayerType.VISITOR;
@@ -31,6 +33,27 @@ public class LoginFrame extends JFrame {
         this.setTitle("Login Frame");
         this.setLayout(null);
         this.setSize(width, height);
+
+        // 调用 playBgm 方法来播放背景音乐
+
+        String bgmPath = "data/sound/bgm.wav";
+
+        Future<?> future = AudioPlayer.playBgm(bgmPath);
+        System.out.println("Audio started: " + future.isDone());
+
+
+
+        /*
+
+        // 创建 AudioPlayer 对象并调用 play 方法来播放音频文件
+        AudioPlayer Soundplayer = new AudioPlayer();
+        String filePath = "data/sound/bgm.wav";
+        Soundplayer.play(filePath);
+        */
+
+// 如果需要取消播放，可以调用 future.cancel(true);
+
+
         JLabel userLabel = FrameUtil.createJLabel(this, new Point(50, 20), 70, 40, "username:");
         JLabel passLabel = FrameUtil.createJLabel(this, new Point(50, 80), 70, 40, "password:");
         username = FrameUtil.createJTextField(this, new Point(120, 20), 120, 40);
