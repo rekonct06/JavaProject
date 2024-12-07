@@ -12,6 +12,7 @@ import save.LoadSave;
 import save.MapSave;
 import view.FrameUtil;
 import view.level.LevelFrame;
+import view.level.SaveLoadFrame;
 
 public class GameFrame extends JFrame {
 
@@ -34,16 +35,25 @@ public class GameFrame extends JFrame {
 
     private LoadSave loadSave;
 
-    public GameFrame(int width, int height, MapMatrix mapMatrix, MapSave orimapsave, LoadSave loadSave ,PlayerManager playerManager, String playerName) {
+    public GameFrame(int width, int height, MapMatrix mapMatrix, MapSave orimapsave, LoadSave loadSave ,PlayerManager playerManager, String playerName, LevelFrame levelFrame) {
         this.setTitle("2024 CS109 Project Demo");
         this.setLayout(null);
         this.setSize(width+50, height+50);
+        this.levelFrame = levelFrame;
         this.loadSave = loadSave;
         this.playerManager = playerManager;
         this.PlayerName = playerName;
 
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point((mapMatrix.getWidth() * 50 + 4) + 80, 30), 180, 50);
     //    gamePanel.setStepLabel(stepLabel);
+
+
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        this.setVisible(true);
+        this.levelFrame.setVisible(false);
+
 
         gamePanel = new GamePanel(mapMatrix, orimapsave ,this, loadSave, stepLabel);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
@@ -53,6 +63,8 @@ public class GameFrame extends JFrame {
         this.add(gamePanel);
 
         this.setController(gamePanel.getController());
+
+
 
     //    this.controller = new GameController(gamePanel, mapMatrix);
 
@@ -95,9 +107,12 @@ public class GameFrame extends JFrame {
                     }
                     System.out.println();
                 }
-                */
-                playerManager.AddLoadto(PlayerName,loadSave);
+                int loadid;
+                playerManager.AddLoadto(PlayerName,loadSave,loadid);
                 playerManager.updateData();
+                */
+
+                SaveLoadFrame saveLoadFrame=new SaveLoadFrame(PlayerName,levelFrame,playerManager,loadSave ,this);
 
             }
             /* 这是原版自定义存档路径的代码，我将改成可以选择存档窗口的模式
@@ -133,8 +148,11 @@ public class GameFrame extends JFrame {
         });
 
         //todo: add other button here
+
+
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
     }
 
     public void WinDialog(){

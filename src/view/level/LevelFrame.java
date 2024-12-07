@@ -60,7 +60,7 @@ public class LevelFrame extends JFrame {
             }
             MapSave orisave=new MapSave(new MapMatrix(temmat));
             LoadSave loadSave=new LoadSave(NowName);
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this);
             this.gameFrame = gameFrame;
             gameFrame.setPlayerName(NowName);
             gameFrame.setPlayerManager(this.playerManager);
@@ -96,7 +96,7 @@ public class LevelFrame extends JFrame {
             }
             MapSave orisave=new MapSave(new MapMatrix(temmat));
             LoadSave loadSave=new LoadSave(NowName);
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this);
             this.gameFrame = gameFrame;
             gameFrame.setPlayerName(this.NowName);
             gameFrame.setPlayerManager(this.playerManager);
@@ -132,7 +132,7 @@ public class LevelFrame extends JFrame {
             }
             MapSave orisave=new MapSave(new MapMatrix(temmat));
             LoadSave loadSave=new LoadSave(NowName);
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this);
             this.gameFrame = gameFrame;
             gameFrame.setPlayerName(this.NowName);
             gameFrame.setPlayerManager(this.playerManager);
@@ -168,7 +168,7 @@ public class LevelFrame extends JFrame {
             }
             MapSave orisave=new MapSave(new MapMatrix(temmat));
             LoadSave loadSave=new LoadSave(NowName);
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this);
             this.gameFrame = gameFrame;
             gameFrame.setPlayerName(this.NowName);
             gameFrame.setPlayerManager(this.playerManager);
@@ -204,7 +204,7 @@ public class LevelFrame extends JFrame {
             }
             MapSave orisave=new MapSave(new MapMatrix(temmat));
             LoadSave loadSave=new LoadSave(NowName);
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this);
             this.gameFrame = gameFrame;
             gameFrame.setPlayerName(this.NowName);
             gameFrame.setPlayerManager(this.playerManager);

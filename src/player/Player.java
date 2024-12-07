@@ -49,6 +49,10 @@ public  class Player implements Serializable {
     }
 
     public int getCntload() {
+        this.Cntload=0;
+        for(LoadSave il:this.loads){
+            if(!il.equals(null))this.Cntload++;
+        }
         return this.Cntload;
     }
 
@@ -71,9 +75,15 @@ public  class Player implements Serializable {
         this.loads = loads;
     }
 
-    public void newload(LoadSave load){
+    public void newload(LoadSave load,int loadid){
         if(this.loads==null)this.loads=new ArrayList<LoadSave>();
-        this.loads.add(load);
-        this.Cntload++;
+        while(this.loads.size()<=loadid){
+            this.loads.add(null);
+        }
+        this.loads.set(loadid,load);
+        this.Cntload=0;
+        for(LoadSave il:this.loads){
+            if(!il.equals(null))this.Cntload++;
+        }
     }
 }

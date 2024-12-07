@@ -43,10 +43,10 @@ public class PlayerManager implements Serializable {
         }
     }
 
-    public void AddLoadto(String username, LoadSave iload){
+    public void AddLoadto(String username, LoadSave iload,int loadid){
         for(Player iplayer : players) {
             if(iplayer.getName().equals(username)){
-                iplayer.newload(iload);
+                iplayer.newload(iload,loadid);
                 break;
             }
         }
@@ -64,6 +64,9 @@ public class PlayerManager implements Serializable {
     public LoadSave getloadofid(String username,int lid){
         for(Player iplayer : players) {
             if(iplayer.getName().equals(username)){
+                if(lid>=iplayer.getLoads().size()){
+                    return null;
+                }
                 if(lid<3)return iplayer.getLoads().get(lid);
                 else return null;
             }

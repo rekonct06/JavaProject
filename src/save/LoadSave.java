@@ -48,11 +48,12 @@ public class LoadSave implements Serializable {
     }
 
     public MapSave getimap(int lid){
+        if(lid<load.size()){return null;}
         return load.get(lid);
     }
 
-    public void saveInFile(PlayerManager playerManager) {
-        playerManager.AddLoadto(this.username,this);
+    public void saveInFile(PlayerManager playerManager,int loadid) {
+        playerManager.AddLoadto(this.username,this,loadid);
         playerManager.updateData();
         /*
         try

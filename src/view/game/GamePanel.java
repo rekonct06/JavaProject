@@ -75,16 +75,10 @@ public class GamePanel extends ListenerPanel {
                 controller.changeModelto(imap);
                 afterMove();
                 cnt++;
-            //    if(cnt==4)break;
-                this.repaint();
-                try {
-                    Thread.sleep(10);     //设置暂停的时间，0.2秒
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+            //    if(cnt==1)break;
+                System.out.println("Fresh");
+            //    pausefor(400);
             }
-
         }
 
     }
@@ -240,5 +234,13 @@ public class GamePanel extends ListenerPanel {
 
     public void loadreset(){
         this.loadSave.resetwith(originalModel);
+    }
+
+    public void pausefor(int ptime){
+        try {
+            Thread.sleep(ptime);     //设置暂停的时间
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
