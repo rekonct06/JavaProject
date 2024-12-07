@@ -33,7 +33,7 @@ public class GameController {
         int tCol = col + direction.getCol();
         GridComponent targetGrid = view.getGridComponent(tRow, tCol);
         int[][] map = model.getMatrix();
-        if (map[tRow][tCol] == 0 || map[tRow][tCol] == 2) {
+        if (map[tRow][tCol] == 0 || map[tRow][tCol] == 2 || map[tRow][tCol] == 3) {
             //update hero in MapMatrix
             model.getMatrix()[row][col] -= 20;
             model.getMatrix()[tRow][tCol] += 20;
@@ -44,23 +44,22 @@ public class GameController {
             h.setRow(tRow);
             h.setCol(tCol);
             return true;
-        }
-        else{
-            if(map[tRow][tCol] == 10 || map[tRow][tCol] == 12){
+        } else {
+            if (map[tRow][tCol] == 10 || map[tRow][tCol] == 12 || map[tRow][tCol] == 13) {
                 int t1Row = tRow + direction.getRow();
                 int t1Col = tCol + direction.getCol();
                 GridComponent current1Grid = view.getGridComponent(tRow, tCol);
                 GridComponent target1Grid = view.getGridComponent(t1Row, t1Col);
-                if(map[t1Row][t1Col] == 0 || map[t1Row][t1Col] == 2 ){
+                if (map[t1Row][t1Col] == 0 || map[t1Row][t1Col] == 2) {
                     //Move Box
                     model.getMatrix()[tRow][tCol] -= 10;
                     model.getMatrix()[t1Row][t1Col] += 10;
-                //    /*
+                    //    /*
                     Box b = current1Grid.removeBoxFromGrid();
                     target1Grid.setBoxInGrid(b);
                     b.setRow(t1Row);
                     b.setCol(t1Col);
-                //    */
+                    //    */
                     //Move Hero
                     model.getMatrix()[row][col] -= 20;
                     model.getMatrix()[tRow][tCol] += 20;
@@ -78,20 +77,20 @@ public class GameController {
 
     public void changeModelto(MapSave toMap) {
 
-        MapSave now=new MapSave(model);
-        if(now.getBoxCnt()!=toMap.getBoxCnt()){
+        MapSave now = new MapSave(model);
+        if (now.getBoxCnt() != toMap.getBoxCnt()) {
             System.out.println("Numbers of Boxes not equal!");
             return;
         }
 
         GridComponent iGird = view.getGridComponent(now.getHeroRow(), now.getHeroCol());
         GridComponent targetGird = view.getGridComponent(toMap.getHeroRow(), toMap.getHeroCol());
-        Hero h=iGird.removeHeroFromGrid();
+        Hero h = iGird.removeHeroFromGrid();
         targetGird.setHeroInGrid(h);
         h.setRow(targetGird.getRow());
         h.setCol(targetGird.getCol());
 
-        for(int i=0;i<now.getBoxCnt();i++){
+        for (int i = 0; i < now.getBoxCnt(); i++) {
             iGird = view.getGridComponent(now.getBoxes()[i][0], now.getBoxes()[i][1]);
             targetGird = view.getGridComponent(toMap.getBoxes()[i][0], toMap.getBoxes()[i][1]);
             Box b = iGird.removeBoxFromGrid();
@@ -100,23 +99,28 @@ public class GameController {
             b.setCol(targetGird.getCol());
         }
 
-        for(int i=0;i<model.getHeight();i++){
-            for(int j=0;j<model.getWidth();j++){
+        for (int i = 0; i < model.getHeight(); i++) {
+            for (int j = 0; j < model.getWidth(); j++) {
                 model.getMatrix()[i][j] = toMap.getMatrix()[i][j];
             }
         }
     }
 
-    public boolean GameWin(){
-        for(int i = 0; i < model.getHeight(); i++){
-            for(int j = 0; j < model.getWidth(); j++){
-                if(model.getId(i, j) == 10) return false; //有不在目的地的箱子，游戏就还未赢
+    public boolean GameWin() {
+        for (int i = 0; i < model.getHeight(); i++) {
+            for (int j = 0; j < model.getWidth(); j++) {
+                if (model.getId(i, j) == 10) return false; //有不在目的地的箱子，游戏就还未赢
             }
         }
         return true;
     }
 
-    public boolean GameLose(){
+    public boolean GameLose() {
+        for (int i = 0; i < model.getHeight(); i++) {
+            for(int j=0;j<model.getWidth();j++){
+                if (model.getId(i, j) == 23) return true;
+            }
+        }
         for(int i = 0; i < model.getHeight(); i++) {
             for (int j = 0; j < model.getWidth(); j++) {
                 if(model.getId(i, j) == 10) {

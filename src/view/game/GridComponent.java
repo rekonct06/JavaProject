@@ -44,6 +44,16 @@ public class GridComponent extends JComponent {
                 g.setColor(Color.BLACK);
                 g.drawPolygon(xPoints, yPoints, 4);
                 break;
+            case 3:
+                g.setColor(Color.WHITE);
+                g.fillRect(0, 0, getWidth(), getHeight());
+                g.setColor(Color.RED);
+                int[] x1Points = {getWidth() / 2, getWidth(), getWidth() / 2, 0};
+                int[] y1Points = {0, getHeight() / 2, getHeight(), getHeight() / 2};
+                g.fillPolygon(x1Points, y1Points, 4);
+                g.setColor(Color.BLACK);
+                g.drawPolygon(x1Points, y1Points, 4);
+                break;
         }
         Border border = BorderFactory.createLineBorder(borderColor, 1);
         this.setBorder(border);
