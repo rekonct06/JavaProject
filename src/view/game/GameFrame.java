@@ -24,6 +24,7 @@ public class GameFrame extends JFrame {
     private JButton leftBtn;
     private JButton rightBtn;
     private JButton quitBtn;
+    private JButton undoBtn;
 
 
     private JLabel stepLabel;
@@ -64,18 +65,19 @@ public class GameFrame extends JFrame {
 
         this.setController(gamePanel.getController());
 
-
+        gamePanel.requestFocusInWindow();
 
     //    this.controller = new GameController(gamePanel, mapMatrix);
 
-        this.upBtn=FrameUtil.createButton(this, "Up", new Point(gamePanel.getWidth() + 100, 250), 70, 50);
-        this.downBtn=FrameUtil.createButton(this, "Down", new Point(gamePanel.getWidth() + 100, 350), 70, 50);
-        this.leftBtn=FrameUtil.createButton(this, "Left", new Point(gamePanel.getWidth() + 60, 300), 70, 50);
-        this.rightBtn=FrameUtil.createButton(this, "Right", new Point(gamePanel.getWidth() + 140, 300), 70, 50);
+        this.upBtn=FrameUtil.createButton(this, "Up", new Point(gamePanel.getWidth() + 100, 280), 70, 50);
+        this.downBtn=FrameUtil.createButton(this, "Down", new Point(gamePanel.getWidth() + 100, 380), 70, 50);
+        this.leftBtn=FrameUtil.createButton(this, "Left", new Point(gamePanel.getWidth() + 60, 330), 70, 50);
+        this.rightBtn=FrameUtil.createButton(this, "Right", new Point(gamePanel.getWidth() + 140, 330), 70, 50);
 
-        this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 80), 80, 50);
-        this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 140), 80, 50);
-        this.quitBtn = FrameUtil.createButton(this, "Menu", new Point(gamePanel.getWidth() + 80, 200), 80, 50);
+        this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 80), 70, 40);
+        this.loadBtn = FrameUtil.createButton(this, "Save", new Point(gamePanel.getWidth() + 80, 130), 70, 40);
+        this.quitBtn = FrameUtil.createButton(this, "Menu", new Point(gamePanel.getWidth() + 80, 180), 70, 40);
+        this.undoBtn = FrameUtil.createButton(this, "Undo", new Point(gamePanel.getWidth() + 80, 230), 70, 40);
 
 
         this.restartBtn.addActionListener(e -> {
@@ -91,7 +93,10 @@ public class GameFrame extends JFrame {
 
                 // 添加关闭按钮
                 JButton closeButton = new JButton("Close");
-                closeButton.addActionListener(ev -> dialog.dispose());  // 关闭对话框
+                closeButton.addActionListener(ev -> {
+                    dialog.dispose();
+                    gamePanel.requestFocusInWindow();
+                });  // 关闭对话框
                 dialog.add(closeButton);
 
                 dialog.setSize(250, 100);
@@ -100,13 +105,6 @@ public class GameFrame extends JFrame {
             }
             else{
                 /*
-                MapMatrix mapa=loadSave.getimap(0).getMapMatrix();
-                for(int i=0;i<mapa.getHeight();i++){
-                    for(int j=0;j<mapa.getWidth();j++){
-                        System.out.printf("%d ",mapa.getId(i,j));
-                    }
-                    System.out.println();
-                }
                 int loadid;
                 playerManager.AddLoadto(PlayerName,loadSave,loadid);
                 playerManager.updateData();
@@ -120,6 +118,27 @@ public class GameFrame extends JFrame {
             System.out.println(string);
             gamePanel.requestFocusInWindow();//enable key listener
              */
+        });
+
+        this.undoBtn.addActionListener(e -> {
+            if(gamePanel.getSteps()==0){
+            //    JOptionPane.showMessageDialog(this, "You are on the first step", "Error", JOptionPane.ERROR_MESSAGE);
+                JDialog dialog = new JDialog(this, "Sorry!", true);  // true: modal dialog
+                dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));  // 垂直布局
+                dialog.add(new JLabel("You are on the first step"));
+                // 添加关闭按钮
+                JButton closeButton = new JButton("Close");
+                closeButton.addActionListener(ev -> dialog.dispose());  // 关闭对话框
+                dialog.add(closeButton);
+                dialog.setSize(250, 100);
+                dialog.setLocationRelativeTo(this);  // 将弹窗定位在主窗口中心
+                dialog.setVisible(true);
+            }
+            else{
+                gamePanel.undostep();
+            //    this.setFocusable(true);
+            }
+            gamePanel.requestFocusInWindow();
         });
 
         this.upBtn.addActionListener(e -> {
@@ -168,6 +187,29 @@ public class GameFrame extends JFrame {
         dialog.add(closeButton);
         dialog.setSize(250, 150);
         dialog.setLocationRelativeTo(this);  // 将弹窗定位在主窗口中心
+        dialog.setVisible(true);
+    }
+
+    public void LoseDialog(){
+        JDialog dialog = new JDialog(this, "Sorry", true);
+        dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
+        dialog.add(new JLabel("You lose!"));
+        JButton closeButton = new JButton("Back To Menu");
+        JButton restartButton = new JButton("Restart");
+        closeButton.addActionListener(ev -> {
+            dialog.dispose();
+            this.levelFrame.setVisible(true);
+            this.dispose();
+        });
+        restartButton.addActionListener(ev -> {
+            controller.restartGame();
+            gamePanel.requestFocusInWindow();
+            dialog.dispose();
+        });
+        dialog.add(closeButton);
+        dialog.add(restartButton);
+        dialog.setSize(250, 150);
+        dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
     }
 

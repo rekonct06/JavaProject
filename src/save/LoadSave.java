@@ -48,8 +48,14 @@ public class LoadSave implements Serializable {
     }
 
     public MapSave getimap(int lid){
-        if(lid<load.size()){return null;}
+        if(lid>=load.size()){return null;}
         return load.get(lid);
+    }
+
+    public void deletelast(){
+        if (!this.load.isEmpty()) {
+            this.load.remove(this.load.size() - 1);
+        }
     }
 
     public void saveInFile(PlayerManager playerManager,int loadid) {

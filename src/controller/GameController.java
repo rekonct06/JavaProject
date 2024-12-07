@@ -78,12 +78,6 @@ public class GameController {
 
     public void changeModelto(MapSave toMap) {
 
-        try {
-            Thread.sleep(300);     //设置暂停的时间，0.2秒
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         MapSave now=new MapSave(model);
         if(now.getBoxCnt()!=toMap.getBoxCnt()){
             System.out.println("Numbers of Boxes not equal!");

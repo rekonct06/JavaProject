@@ -107,6 +107,20 @@ public class GamePanel extends ListenerPanel {
         this.repaint();
     }
 
+    public void undostep(){
+        this.steps--;
+        this.stepLabel.setText(String.format("Step: %d", this.steps));
+        MapSave imap=loadSave.getimap(steps);
+        if(imap.equals(null)){
+            System.out.println("this map is null");
+        }
+        else{
+            controller.changeModelto(imap);
+            loadSave.deletelast();
+        }
+    //    System.out.println(loadSave.getmapnum());
+    }
+
     public void Overcheck(){
         if(controller.GameWin()){
             System.out.println("WIN!");
@@ -120,6 +134,7 @@ public class GamePanel extends ListenerPanel {
         else{
             if(controller.GameLose()){
                 System.out.println("LOSE!");
+                gameFrame.LoseDialog();
                 //有待完善
             }
         }
@@ -230,6 +245,10 @@ public class GamePanel extends ListenerPanel {
 
     public MapSave getOriginalModel() {
         return originalModel;
+    }
+
+    public int getSteps(){
+        return steps;
     }
 
     public void loadreset(){
