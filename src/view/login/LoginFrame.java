@@ -96,46 +96,22 @@ public class LoginFrame extends JFrame {
          */
 
         registerBtn.addActionListener(e -> {
-            System.out.println("Username = " + username.getText());
-            System.out.println("Password = " + password.getText());
-            boolean findplayer = false;
-            for(Player iplayer : Manager.getPlayers()){
-                if(iplayer.getName().equals(username.getText())){
-                    findplayer = true;
-                }
-            }
-            if(!findplayer){
-                NowPlayer = new Player(Manager.getCntPlayer()+1, username.getText(), password.getText(), LOCAL);
-                Manager.addPlayer(NowPlayer);
-                Manager.updateData();
-                this.setNowName(username.getText());
-                if (this.levelFrame != null) {
-                    this.levelFrame.setNowName(NowName);
-                    this.levelFrame.setPlayerManager(Manager);
-                    this.levelFrame.setVisible(true);
-                    this.setVisible(false);
-                }
+            if(username.getText().equals("") || password.getText().equals("")){
+                newdialog("Name and password can't be empty");
             }
             else{
-                System.out.println("Player already exists");
-            }
-        });
-
-        submitBtn.addActionListener(e -> {
-            System.out.println("Username = " + username.getText());
-            System.out.println("Password = " + password.getText());
-            boolean findplayer = false;
-            boolean CorPass=false;
-            for(Player iplayer : Manager.getPlayers()){
-                if(iplayer.getName().equals(username.getText())){
-                    findplayer = true;
-                    if(iplayer.getPassword().equals(password.getText())){CorPass = true;}
+                System.out.println("Username = " + username.getText());
+                System.out.println("Password = " + password.getText());
+                boolean findplayer = false;
+                for(Player iplayer : Manager.getPlayers()){
+                    if(iplayer.getName().equals(username.getText())){
+                        findplayer = true;
+                    }
                 }
-            }
-            if(!findplayer){System.out.println("Player not found");    }
-            else{
-                if(!CorPass){System.out.println("Password does not match");    }
-                else{
+                if(!findplayer){
+                    NowPlayer = new Player(Manager.getCntPlayer()+1, username.getText(), password.getText(), LOCAL);
+                    Manager.addPlayer(NowPlayer);
+                    Manager.updateData();
                     this.setNowName(username.getText());
                     if (this.levelFrame != null) {
                         this.levelFrame.setNowName(NowName);
@@ -144,7 +120,48 @@ public class LoginFrame extends JFrame {
                         this.setVisible(false);
                     }
                 }
+                else{
+                    System.out.println("Player already exists");
+                    newdialog("Player already exists");
+                }
             }
+
+        });
+
+        submitBtn.addActionListener(e -> {
+            if(username.getText().equals("") || password.getText().equals("")){
+                newdialog("Name and password can't be empty");
+            }
+            else{
+                System.out.println("Username = " + username.getText());
+                System.out.println("Password = " + password.getText());
+                boolean findplayer = false;
+                boolean CorPass=false;
+                for(Player iplayer : Manager.getPlayers()){
+                    if(iplayer.getName().equals(username.getText())){
+                        findplayer = true;
+                        if(iplayer.getPassword().equals(password.getText())){CorPass = true;}
+                    }
+                }
+                if(!findplayer){System.out.println("Player not found");
+                    newdialog("Player not found");
+                }
+                else{
+                    if(!CorPass){System.out.println("Password does not match");
+                        newdialog("Password does not match");
+                    }
+                    else{
+                        this.setNowName(username.getText());
+                        if (this.levelFrame != null) {
+                            this.levelFrame.setNowName(NowName);
+                            this.levelFrame.setPlayerManager(Manager);
+                            this.levelFrame.setVisible(true);
+                            this.setVisible(false);
+                        }
+                    }
+                }
+            }
+
 
             //todo: check login info
 
@@ -189,7 +206,21 @@ public class LoginFrame extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
+    public void newdialog(String msg){
+        JDialog dialog = new JDialog(this, "Sorry!", true);  // true: modal dialog
+        dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));  // 垂直布局
 
+        dialog.add(new JLabel(msg));
+
+        // 添加关闭按钮
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(ev -> dialog.dispose());  // 关闭对话框
+        dialog.add(closeButton);
+
+        dialog.setSize(250, 100);
+        dialog.setLocationRelativeTo(this);  // 将弹窗定位在主窗口中心
+        dialog.setVisible(true);
+    }
 
     public void setLevelFrame(LevelFrame levelFrame) {
         this.levelFrame = levelFrame;

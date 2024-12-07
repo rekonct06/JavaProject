@@ -31,6 +31,7 @@ public class LevelFrame extends JFrame {
         JButton level6Btn = FrameUtil.createButton(this, "Level6", new Point(480,  50), 60, 60);
 
         JButton loadBtn=FrameUtil.createButton(this, "Read loads", new Point(30, height - 100), 100, 60);
+        JButton newmapBtn=FrameUtil.createButton(this, "New map", new Point(200, height - 100), 100, 60);
 
         level1Btn.addActionListener(l->{
             MapMatrix mapMatrix =null;

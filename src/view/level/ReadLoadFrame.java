@@ -26,7 +26,7 @@ public class ReadLoadFrame extends JFrame {
     public ReadLoadFrame(int width, int height,LevelFrame levelFrame, PlayerManager playerManager,String NowName) {
         this.setTitle("Choose a Load");
         this.setLayout(null);
-        this.setSize(width, height);
+        this.setSize(width+100, height);
         this.levelFrame = levelFrame;
         this.playerManager = playerManager;
         this.NowName = NowName;
@@ -34,11 +34,17 @@ public class ReadLoadFrame extends JFrame {
         this.loadnum = playerManager.getloadnum(NowName);
 
         this.viewloadnum = FrameUtil.createJLabel(this, "0", new Font("serif", Font.ITALIC, 22), new Point(30, 30), 180, 50);
-        JButton load1Btn = FrameUtil.createButton(this, "Load 1", new Point(50, 100), 100, 40);
-        JButton load2Btn = FrameUtil.createButton(this, "Load 2", new Point(50, 150), 100, 40);
-        JButton load3Btn = FrameUtil.createButton(this, "Load 3", new Point(50, 200), 100, 40);
 
-        viewloadnum.setText(String.format("Load: %d",loadnum));
+        JButton load1Btn = FrameUtil.createButton(this, "Load 1", new Point(50, 100), 200, 40);
+        JButton load2Btn = FrameUtil.createButton(this, "Load 2", new Point(50, 150), 200, 40);
+        JButton load3Btn = FrameUtil.createButton(this, "Load 3", new Point(50, 200), 200, 40);
+        JButton closeBtn = FrameUtil.createButton(this, "Close", new Point(50, 300), 100, 40);
+
+        if(playerManager.getloadofid(NowName,0)==null)load1Btn.setText("Load 1:Empty");
+        if(playerManager.getloadofid(NowName,1)==null)load2Btn.setText("Load 2:Empty");
+        if(playerManager.getloadofid(NowName,2)==null)load3Btn.setText("Load 3:Empty");
+
+        viewloadnum.setText(String.format("Loads number: %d",loadnum));
 
         load1Btn.addActionListener(l->{
             LoadSave loadSaveF=playerManager.getloadofid(NowName,0);
@@ -56,8 +62,15 @@ public class ReadLoadFrame extends JFrame {
                     }
                     loadSave.addmap(new MapSave(new MapMatrix(temmat)));
                 }
-                MapSave orisave=loadSave.getimap(0);
-                MapMatrix mapMatrix=orisave.getMapMatrix();
+                MapSave osave=loadSave.getimap(0);
+                int[][] temmap=new int[osave.getMapMatrix().getHeight()][osave.getMapMatrix().getWidth()];
+                for(int i=0;i<osave.getMapMatrix().getHeight();i++){
+                    for(int j=0;j<osave.getMapMatrix().getWidth();j++){
+                        temmap[i][j]=osave.getMapMatrix().getId(i,j);
+                    }
+                }
+                MapMatrix mapMatrix=new MapMatrix(temmap);
+                MapSave orisave=new MapSave(new MapMatrix(temmap));
                 GameFrame gameFrame = new GameFrame(600,450,mapMatrix,orisave,loadSave,playerManager,NowName,levelFrame);
                 //    this.levelFrame.setVisible(false);
                 //    gameFrame.setVisible(true);
@@ -93,8 +106,15 @@ public class ReadLoadFrame extends JFrame {
                     }
                     loadSave.addmap(new MapSave(new MapMatrix(temmat)));
                 }
-                MapSave orisave=loadSave.getimap(1);
-                MapMatrix mapMatrix=orisave.getMapMatrix();
+                MapSave osave=loadSave.getimap(0);
+                int[][] temmap=new int[osave.getMapMatrix().getHeight()][osave.getMapMatrix().getWidth()];
+                for(int i=0;i<osave.getMapMatrix().getHeight();i++){
+                    for(int j=0;j<osave.getMapMatrix().getWidth();j++){
+                        temmap[i][j]=osave.getMapMatrix().getId(i,j);
+                    }
+                }
+                MapMatrix mapMatrix=new MapMatrix(temmap);
+                MapSave orisave=new MapSave(new MapMatrix(temmap));
                 GameFrame gameFrame = new GameFrame(600,450,mapMatrix,orisave,loadSave,playerManager,NowName,levelFrame);
                 //    this.levelFrame.setVisible(false);
                 //    gameFrame.setVisible(true);
@@ -118,13 +138,24 @@ public class ReadLoadFrame extends JFrame {
                     }
                     loadSave.addmap(new MapSave(new MapMatrix(temmat)));
                 }
-                MapSave orisave=loadSave.getimap(0);
-                MapMatrix mapMatrix=orisave.getMapMatrix();
+                MapSave osave=loadSave.getimap(0);
+                int[][] temmap=new int[osave.getMapMatrix().getHeight()][osave.getMapMatrix().getWidth()];
+                for(int i=0;i<osave.getMapMatrix().getHeight();i++){
+                    for(int j=0;j<osave.getMapMatrix().getWidth();j++){
+                        temmap[i][j]=osave.getMapMatrix().getId(i,j);
+                    }
+                }
+                MapMatrix mapMatrix=new MapMatrix(temmap);
+                MapSave orisave=new MapSave(new MapMatrix(temmap));
                 GameFrame gameFrame = new GameFrame(600,450,mapMatrix,orisave,loadSave,playerManager,NowName,levelFrame);
                 //    this.levelFrame.setVisible(false);
                 //    gameFrame.setVisible(true);
                 this.dispose();
             }
+        });
+
+        closeBtn.addActionListener(l->{
+            this.dispose();
         });
 
         this.setLocationRelativeTo(null);

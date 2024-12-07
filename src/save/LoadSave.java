@@ -39,6 +39,7 @@ public class LoadSave implements Serializable {
     }
 
     public int getmapnum(){
+        if(load==null){return 0;}
         return load.size();
     }
 

@@ -132,7 +132,7 @@ public class GameFrame extends JFrame {
                 */
 
                 SaveLoadFrame saveLoadFrame=new SaveLoadFrame(PlayerName,levelFrame,playerManager,loadSave ,this);
-
+                saveLoadFrame.setVisible(true);
             }
             timer.start();
             /* 这是原版自定义存档路径的代码，我将改成可以选择存档窗口的模式
@@ -191,7 +191,14 @@ public class GameFrame extends JFrame {
             Future<?> future4 = AudioPlayer.playSound(tempath);
 
             if(!playerName.equals("Visitor")){
-
+                for(int i=0;i<3;i++){
+                    if(playerManager.getloadofid(PlayerName,i)==null){
+                        playerManager.AddLoadto(PlayerName, loadSave ,i);
+                        playerManager.updateData();
+                        System.out.println("Your data has been automatically saved to the load"+(i+1));
+                        break;
+                    }
+                }
             }
             this.levelFrame.setVisible(true);
             this.dispose();
@@ -200,6 +207,11 @@ public class GameFrame extends JFrame {
         //todo: add other button here
 
 
+        /*
+        if(loadSave.getmapnum()>1){
+            gamePanel.loadin();
+        }
+         */
 
 
         this.setLocationRelativeTo(null);

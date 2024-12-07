@@ -25,7 +25,7 @@ public class SaveLoadFrame extends JFrame {
 
         this.setTitle("Choose a Load");
         this.setLayout(null);
-        this.setSize(150, 300);
+        this.setSize(300, 500);
 
         this.NowName = NowName;
         this.levelFrame = levelFrame;
@@ -33,20 +33,24 @@ public class SaveLoadFrame extends JFrame {
         this.loadSave = loadSave;
         this.gameFrame = gameFrame;
 
-        this.setVisible(true);
-        this.gameFrame.setVisible(false);
 
 
-        JButton load1Btn = FrameUtil.createButton(this, "Load 1", new Point(30, 50), 100, 40);
-        JButton load2Btn = FrameUtil.createButton(this, "Load 2", new Point(30, 100), 100, 40);
-        JButton load3Btn = FrameUtil.createButton(this, "Load 3", new Point(30, 150), 100, 40);
+        JButton load1Btn = FrameUtil.createButton(this, "Load 1", new Point(30, 50), 200, 40);
+        JButton load2Btn = FrameUtil.createButton(this, "Load 2", new Point(30, 100), 200, 40);
+        JButton load3Btn = FrameUtil.createButton(this, "Load 3", new Point(30, 150), 200, 40);
         JButton closeBtn = FrameUtil.createButton(this, "Close", new Point(30, 200), 100, 40);
+
+        if(playerManager.getloadofid(NowName,0)==null)load1Btn.setText("Load 1:Empty");
+        if(playerManager.getloadofid(NowName,1)==null)load2Btn.setText("Load 2:Empty");
+        if(playerManager.getloadofid(NowName,2)==null)load3Btn.setText("Load 3:Empty");
 
         load1Btn.addActionListener(l->{
             playerManager.AddLoadto(NowName,loadSave,0);
             playerManager.updateData();
             this.dispose();
             this.setVisible(false);
+            this.gameFrame.setVisible(false);
+            this.gameFrame.dispose();
             this.levelFrame.setVisible(true);
         });
 
@@ -55,6 +59,8 @@ public class SaveLoadFrame extends JFrame {
             playerManager.updateData();
             this.dispose();
             this.setVisible(false);
+            this.gameFrame.setVisible(false);
+            this.gameFrame.dispose();
             this.levelFrame.setVisible(true);
         });
 
@@ -63,6 +69,8 @@ public class SaveLoadFrame extends JFrame {
             playerManager.updateData();
             this.dispose();
             this.setVisible(false);
+            this.gameFrame.setVisible(false);
+            this.gameFrame.dispose();
             this.levelFrame.setVisible(true);
         });
 
@@ -71,7 +79,6 @@ public class SaveLoadFrame extends JFrame {
             this.setVisible(false);
             this.gameFrame.setVisible(true);
         });
-
 
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

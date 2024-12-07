@@ -51,7 +51,7 @@ public  class Player implements Serializable {
     public int getCntload() {
         this.Cntload=0;
         for(LoadSave il:this.loads){
-            if(!il.equals(null))this.Cntload++;
+            if(il!=null)this.Cntload++;
         }
         return this.Cntload;
     }
@@ -83,7 +83,7 @@ public  class Player implements Serializable {
         this.loads.set(loadid,load);
         this.Cntload=0;
         for(LoadSave il:this.loads){
-            if(!il.equals(null))this.Cntload++;
+            if(il!=null)this.Cntload++;
         }
     }
 }

@@ -64,6 +64,8 @@ public class PlayerManager implements Serializable {
     public LoadSave getloadofid(String username,int lid){
         for(Player iplayer : players) {
             if(iplayer.getName().equals(username)){
+                if(iplayer.getLoads()==null)return null;
+                if(iplayer.getCntload()==0)return null;
                 if(lid>=iplayer.getLoads().size()){
                     return null;
                 }

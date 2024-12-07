@@ -71,6 +71,7 @@ public class GamePanel extends ListenerPanel {
                 afterMove();
             });
             */
+
             int cnt=0;
             for(int i=1;i<loadSave.getmapnum();i++){
                 MapSave imap=loadSave.getimap(i);
@@ -78,11 +79,23 @@ public class GamePanel extends ListenerPanel {
                 afterMove();
                 cnt++;
             //    if(cnt==1)break;
-                System.out.println("Fresh");
+                System.out.println("Refresh");
             //    pausefor(400);
             }
+
         }
 
+    }
+
+    public void loadin(){
+        for(int i=1;i<loadSave.getmapnum();i++){
+        //    pausefor(400);
+            MapSave imap=loadSave.getimap(i);
+            controller.changeModelto(imap);
+            afterMove();
+            System.out.println("Fresh");
+        //    pausefor(400);
+        }
     }
 
     public void initialGame() {

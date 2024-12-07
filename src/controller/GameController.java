@@ -5,6 +5,9 @@ import model.MapMatrix;
 import save.MapSave;
 import view.game.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * It is a bridge to combine GamePanel(view) and MapMatrix(model) in one game.
  * You can design several methods about the game logic in this class.
@@ -90,13 +93,20 @@ public class GameController {
         h.setRow(targetGird.getRow());
         h.setCol(targetGird.getCol());
 
+        List<Box> temboxes = new ArrayList<>();
+
         for (int i = 0; i < now.getBoxCnt(); i++) {
             iGird = view.getGridComponent(now.getBoxes()[i][0], now.getBoxes()[i][1]);
             targetGird = view.getGridComponent(toMap.getBoxes()[i][0], toMap.getBoxes()[i][1]);
             Box b = iGird.removeBoxFromGrid();
-            targetGird.setBoxInGrid(b);
-            b.setRow(targetGird.getRow());
-            b.setCol(targetGird.getCol());
+        //    targetGird.setBoxInGrid(b);
+        //    b.setRow(targetGird.getRow());
+        //    b.setCol(targetGird.getCol());
+        }
+
+        for(int i=0;i< now.getBoxCnt();i++) {
+            targetGird = view.getGridComponent(toMap.getBoxes()[i][0], toMap.getBoxes()[i][1]);
+            targetGird.setBoxInGrid(new Box(40, 40, toMap.getBoxes()[i][0], toMap.getBoxes()[i][1]));
         }
 
         for (int i = 0; i < model.getHeight(); i++) {
