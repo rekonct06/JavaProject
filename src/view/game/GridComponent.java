@@ -7,10 +7,11 @@ import java.awt.*;
 public class GridComponent extends JComponent {
     private int row;
     private int col;
-    private final int id; // represents the units digit value. It cannot be changed during one game.
+    private int id; // represents the units digit value. It cannot be changed during one game.
 
     private Hero hero;
     private Box box;
+    private Temp temp;
     static Color color = new Color(246, 246, 229);
 
     public GridComponent(int row, int col, int id, int gridSize) {
@@ -79,6 +80,17 @@ public class GridComponent extends JComponent {
         return id;
     }
 
+    public Hero getHero() {
+        return hero;
+    }
+    public Box getBox() {
+        return box;
+    }
+
+    public Temp getTemp() {
+        return temp;
+    }
+
     //When adding a hero in this grid, invoking this method.
     public void setHeroInGrid(Hero hero) {
         this.hero = hero;
@@ -109,7 +121,27 @@ public class GridComponent extends JComponent {
         return b;
     }
 
-    public void reset(){
+    public void setTempInGrid(Temp temp) {
+        this.temp = temp;
+        this.add(temp);
+    }
 
+    public Temp removeTempFromGrid() {
+        this.remove(this.temp);
+        Temp t = this.temp;
+        this.temp = null;
+        this.revalidate();
+        this.repaint();
+        return t;
+    }
+
+    public void reset(){
+        this.revalidate();
+        this.repaint();
+    }
+    public void setId(int id){
+        this.id=id;
+        this.revalidate();
+        this.repaint();
     }
 }

@@ -94,7 +94,7 @@ public class GamePanel extends ListenerPanel {
             controller.changeModelto(imap);
             afterMove();
             System.out.println("Fresh");
-        //    pausefor(400);
+            pausefor(400);
         }
     }
 
@@ -104,7 +104,7 @@ public class GamePanel extends ListenerPanel {
         for (int i = 0; i < grids.length; i++) {
             for (int j = 0; j < grids[i].length; j++) {
                 //Units digit maps to id attribute in GridComponent. (The no change value)
-                grids[i][j] = new GridComponent(i, j, model.getId(i, j) % 10, this.GRID_SIZE);
+                if(grids[i][j]==null)grids[i][j] = new GridComponent(i, j, model.getId(i, j) % 10, this.GRID_SIZE);
                 grids[i][j].setLocation(j * GRID_SIZE + 2, i * GRID_SIZE + 2);
                 //Ten digit maps to Box or Hero in corresponding location in the GridComponent. (Changed value)
                 switch (model.getId(i, j) / 10) {

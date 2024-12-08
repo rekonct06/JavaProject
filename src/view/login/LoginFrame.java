@@ -43,17 +43,6 @@ public class LoginFrame extends JFrame {
 
 
 
-        /*
-
-        // 创建 AudioPlayer 对象并调用 play 方法来播放音频文件
-        AudioPlayer Soundplayer = new AudioPlayer();
-        String filePath = "data/sound/bgm.wav";
-        Soundplayer.play(filePath);
-        */
-
-// 如果需要取消播放，可以调用 future.cancel(true);
-
-
         JLabel userLabel = FrameUtil.createJLabel(this, new Point(50, 20), 70, 40, "username:");
         JLabel passLabel = FrameUtil.createJLabel(this, new Point(50, 80), 70, 40, "password:");
         username = FrameUtil.createJTextField(this, new Point(120, 20), 120, 40);
