@@ -29,13 +29,13 @@ public class LevelFrame extends JFrame {
         this.setTitle("Level");
         this.setLayout(null);
         this.setSize(width, height);
-        JButton level1Btn = FrameUtil.createButton(this, "Level1", new Point(30, 50), 60, 60);
-        JButton level2Btn = FrameUtil.createButton(this, "Level2", new Point(120,  50), 60, 60);
-        JButton level3Btn = FrameUtil.createButton(this, "Level3", new Point(210,  50), 60, 60);
-        JButton level4Btn = FrameUtil.createButton(this, "Level4", new Point(300,  50), 60, 60);
-        JButton level5Btn = FrameUtil.createButton(this, "Level5", new Point(390,  50), 60, 60);
-        JButton level6Btn = FrameUtil.createButton(this, "Level6", new Point(480,  50), 60, 60);
-        JButton level7Btn = FrameUtil.createButton(this, "Level7", new Point(520,  50), 60, 60);
+        JButton level1Btn = FrameUtil.createButton(this, "1", new Point(30, 50), 60, 60);
+        JButton level2Btn = FrameUtil.createButton(this, "2", new Point(120,  50), 60, 60);
+        JButton level3Btn = FrameUtil.createButton(this, "3", new Point(210,  50), 60, 60);
+        JButton level4Btn = FrameUtil.createButton(this, "4", new Point(300,  50), 60, 60);
+        JButton level5Btn = FrameUtil.createButton(this, "5", new Point(390,  50), 60, 60);
+        JButton level6Btn = FrameUtil.createButton(this, "6", new Point(480,  50), 60, 60);
+        JButton level7Btn = FrameUtil.createButton(this, "7", new Point(570,  50), 60, 60);
 
         JButton loadBtn=FrameUtil.createButton(this, "Read loads", new Point(30, height - 100), 100, 60);
         JButton newmapBtn=FrameUtil.createButton(this, "New map", new Point(200, height - 100), 100, 60);
