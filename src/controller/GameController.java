@@ -26,7 +26,7 @@ public class GameController {
         System.out.println("Do restart game here");
         view.resetStep();
         view.loadreset();
-        changeModelto(view.getOriginalModel());
+        changeModelto(view.getOriginalModel()); 
     }
 
     public boolean doMove(int row, int col, Direction direction) {
@@ -53,7 +53,7 @@ public class GameController {
                 int t1Col = tCol + direction.getCol();
                 GridComponent current1Grid = view.getGridComponent(tRow, tCol);
                 GridComponent target1Grid = view.getGridComponent(t1Row, t1Col);
-                if (map[t1Row][t1Col] == 0 || map[t1Row][t1Col] == 2) {
+                if (map[t1Row][t1Col] == 0 || map[t1Row][t1Col] == 2||map[t1Row][t1Col] == 3) {
                     //Move Box
                     model.getMatrix()[tRow][tCol] -= 10;
                     model.getMatrix()[t1Row][t1Col] += 10;
@@ -120,6 +120,8 @@ public class GameController {
         for (int i = 0; i < model.getHeight(); i++) {
             for (int j = 0; j < model.getWidth(); j++) {
                 if (model.getId(i, j) == 10) return false; //有不在目的地的箱子，游戏就还未赢
+                if(model.getId(i,j)==13)return false;
+                if(model.getId(i,j)/10==1&&model.getId(i,j)!=12)return false;
             }
         }
         return true;
@@ -145,12 +147,12 @@ public class GameController {
         }
         for(int i = 0; i < model.getHeight(); i++){
             for(int j = 0; j < model.getWidth(); j++){
-                if(model.getId(i, j) == 10) {
-                    if(model.getId(i+1, j) == 0 || model.getId(i+1, j) == 2 || model.getId(i+1, j)== 20 || model.getId(i+1, j) == 22)
-                        if(model.getId(i-1, j) == 0 || model.getId(i-1, j) == 2 || model.getId(i-1, j)== 20|| model.getId(i-1, j) == 22)
+                if(model.getId(i, j) == 10 || model.getId(i,j)==13) {
+                    if(model.getId(i+1, j) == 0 || model.getId(i+1, j) == 2 || model.getId(i+1, j)== 20 || model.getId(i+1, j) == 22||model.getId(i+1,j)==3)
+                        if(model.getId(i-1, j) == 0 || model.getId(i-1, j) == 2 || model.getId(i-1, j)== 20|| model.getId(i-1, j) == 22||model.getId(i-1,j)==3)
                             return false;
-                    if(model.getId(i, j+1) == 0 || model.getId(i, j+1) == 2 || model.getId(i, j+1)== 20 || model.getId(i, j+1) == 22)
-                        if(model.getId(i, j-1) == 0 || model.getId(i, j-1) == 2 || model.getId(i, j-1)== 20 || model.getId(i, j-1) == 22)
+                    if(model.getId(i, j+1) == 0 || model.getId(i, j+1) == 2 || model.getId(i, j+1)== 20 || model.getId(i, j+1) == 22|| model.getId(i, j+1) == 3)
+                        if(model.getId(i, j-1) == 0 || model.getId(i, j-1) == 2 || model.getId(i, j-1)== 20 || model.getId(i, j-1) == 22|| model.getId(i, j-1) == 3)
                             return false;
                 }
             }

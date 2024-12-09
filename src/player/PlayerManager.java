@@ -34,10 +34,10 @@ public class PlayerManager implements Serializable {
         return players;
     }
 
-    public void PlayerWin(String WinnerName){
+    public void PlayerWin(String WinnerName,int levelid,int step){
         for(Player iplayer : players) {
             if(iplayer.getName().equals(WinnerName)){
-                iplayer.win();
+                iplayer.win(levelid,step);
                 break;
             }
         }
@@ -74,6 +74,21 @@ public class PlayerManager implements Serializable {
             }
         }
         return null;
+    }
+
+    public String getminstep(int levelid){
+        if(levelid==0)return null;
+        int minstep=100000;
+        String minname=null;
+        for(Player iplayer : players) {
+            if(iplayer.getstep(levelid)==100000)continue;
+            if(iplayer.getstep(levelid)<minstep) {
+                minstep = iplayer.getstep(levelid);
+                minname = iplayer.getName();
+            }
+        }
+        if(minstep==100000)return null;
+        return String.format("%s,%d",minname,minstep);
     }
 
     public void sortPlayersByWins() {

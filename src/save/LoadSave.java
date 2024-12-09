@@ -11,9 +11,10 @@ public class LoadSave implements Serializable {
     public static final long serialVersionUID = 1L;
     private String username;
     private List<MapSave> load ;
-
-    public LoadSave(String username) {
+    private int levelid;
+    public LoadSave(String username,int levelid) {
         this.username = username;
+        this.levelid = levelid;
         load = new ArrayList<MapSave>();
     }
 
@@ -57,6 +58,13 @@ public class LoadSave implements Serializable {
         if (!this.load.isEmpty()) {
             this.load.remove(this.load.size() - 1);
         }
+    }
+
+    public int getlevelid() {
+        return levelid;
+    }
+    public void setlevelid(int levelid) {
+        this.levelid = levelid;
     }
 
     public void saveInFile(PlayerManager playerManager,int loadid) {

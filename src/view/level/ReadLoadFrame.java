@@ -48,11 +48,12 @@ public class ReadLoadFrame extends JFrame {
 
         load1Btn.addActionListener(l->{
             LoadSave loadSaveF=playerManager.getloadofid(NowName,0);
+            int levelid=playerManager.getloadofid(NowName,0).getlevelid();
             if(loadSaveF==null){
                 JOptionPane.showMessageDialog(levelFrame, "Load Failed", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else{
-                LoadSave loadSave=new LoadSave(NowName);
+                LoadSave loadSave=new LoadSave(NowName,levelid);
                 for(MapSave imsave: loadSaveF.getLoad()){
                     int[][] temmat=new int[imsave.getMapMatrix().getHeight()][imsave.getMapMatrix().getWidth()];
                     for(int i=0;i<imsave.getMapMatrix().getHeight();i++){
@@ -71,7 +72,7 @@ public class ReadLoadFrame extends JFrame {
                 }
                 MapMatrix mapMatrix=new MapMatrix(temmap);
                 MapSave orisave=new MapSave(new MapMatrix(temmap));
-                GameFrame gameFrame = new GameFrame(600,450,mapMatrix,orisave,loadSave,playerManager,NowName,levelFrame);
+                GameFrame gameFrame = new GameFrame(600,450,mapMatrix,orisave,loadSave,playerManager,NowName,levelFrame,levelid);
                 //    this.levelFrame.setVisible(false);
                 //    gameFrame.setVisible(true);
                 this.dispose();
@@ -92,11 +93,12 @@ public class ReadLoadFrame extends JFrame {
 
         load2Btn.addActionListener(l->{
             LoadSave loadSaveF=playerManager.getloadofid(NowName,1);
+            int levelid=playerManager.getloadofid(NowName,1).getlevelid();
             if(loadSaveF==null){
                 JOptionPane.showMessageDialog(levelFrame, "Load Empty", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else{
-                LoadSave loadSave=new LoadSave(NowName);
+                LoadSave loadSave=new LoadSave(NowName,levelid);
                 for(MapSave imsave: loadSaveF.getLoad()){
                     int[][] temmat=new int[imsave.getMapMatrix().getHeight()][imsave.getMapMatrix().getWidth()];
                     for(int i=0;i<imsave.getMapMatrix().getHeight();i++){
@@ -115,7 +117,7 @@ public class ReadLoadFrame extends JFrame {
                 }
                 MapMatrix mapMatrix=new MapMatrix(temmap);
                 MapSave orisave=new MapSave(new MapMatrix(temmap));
-                GameFrame gameFrame = new GameFrame(600,450,mapMatrix,orisave,loadSave,playerManager,NowName,levelFrame);
+                GameFrame gameFrame = new GameFrame(600,450,mapMatrix,orisave,loadSave,playerManager,NowName,levelFrame,levelid);
                 //    this.levelFrame.setVisible(false);
                 //    gameFrame.setVisible(true);
                 this.dispose();
@@ -124,11 +126,12 @@ public class ReadLoadFrame extends JFrame {
 
         load3Btn.addActionListener(l->{
             LoadSave loadSaveF=playerManager.getloadofid(NowName,2);
+            int levelid=playerManager.getloadofid(NowName,2).getlevelid();
             if(loadSaveF==null){
                 JOptionPane.showMessageDialog(levelFrame, "Load Failed", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else{
-                LoadSave loadSave=new LoadSave(NowName);
+                LoadSave loadSave=new LoadSave(NowName,2);
                 for(MapSave imsave: loadSaveF.getLoad()){
                     int[][] temmat=new int[imsave.getMapMatrix().getHeight()][imsave.getMapMatrix().getWidth()];
                     for(int i=0;i<imsave.getMapMatrix().getHeight();i++){
@@ -147,7 +150,7 @@ public class ReadLoadFrame extends JFrame {
                 }
                 MapMatrix mapMatrix=new MapMatrix(temmap);
                 MapSave orisave=new MapSave(new MapMatrix(temmap));
-                GameFrame gameFrame = new GameFrame(600,450,mapMatrix,orisave,loadSave,playerManager,NowName,levelFrame);
+                GameFrame gameFrame = new GameFrame(600,450,mapMatrix,orisave,loadSave,playerManager,NowName,levelFrame,levelid);
                 //    this.levelFrame.setVisible(false);
                 //    gameFrame.setVisible(true);
                 this.dispose();

@@ -1,6 +1,7 @@
 package view.level;
 
 import model.MapMatrix;
+import player.Player;
 import player.PlayerManager;
 import save.LoadSave;
 import save.MapSave;
@@ -10,12 +11,15 @@ import view.game.NewMapFrame;
 import view.login.LoginFrame;
 import view.level.ReadLoadFrame;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.*;
-
+import java.util.ArrayList;
+import java.util.List;
 import static javax.swing.JOptionPane.showInputDialog;
 
 public class LevelFrame extends JFrame {
@@ -29,16 +33,31 @@ public class LevelFrame extends JFrame {
         this.setTitle("Level");
         this.setLayout(null);
         this.setSize(width, height);
-        JButton level1Btn = FrameUtil.createButton(this, "1", new Point(30, 50), 60, 60);
-        JButton level2Btn = FrameUtil.createButton(this, "2", new Point(120,  50), 60, 60);
-        JButton level3Btn = FrameUtil.createButton(this, "3", new Point(210,  50), 60, 60);
-        JButton level4Btn = FrameUtil.createButton(this, "4", new Point(300,  50), 60, 60);
-        JButton level5Btn = FrameUtil.createButton(this, "5", new Point(390,  50), 60, 60);
-        JButton level6Btn = FrameUtil.createButton(this, "6", new Point(480,  50), 60, 60);
-        JButton level7Btn = FrameUtil.createButton(this, "7", new Point(570,  50), 60, 60);
 
-        JButton loadBtn=FrameUtil.createButton(this, "Read loads", new Point(30, height - 100), 100, 60);
-        JButton newmapBtn=FrameUtil.createButton(this, "New map", new Point(200, height - 100), 100, 60);
+        try {
+            BufferedImage bg = ImageIO.read(new File("src/image/bg1.png")); // 替换为实际的绝对路径
+            JLabel backgroundLabel = new JLabel(new ImageIcon(bg));
+            backgroundLabel.setBounds(10, 0, 400, 500);
+            this.add(backgroundLabel); // 添加背景标签到窗口
+            this.setContentPane(backgroundLabel); // 设置窗口的内容面板为背景标签
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to load background image");
+        }
+
+        JButton level1Btn = FrameUtil.createButton(this, "1", new Point(30, 10), 50, 50);
+        JButton level2Btn = FrameUtil.createButton(this, "2", new Point(30,  80), 50, 50);
+        JButton level3Btn = FrameUtil.createButton(this, "3", new Point(30,  150), 50, 50);
+        JButton level4Btn = FrameUtil.createButton(this, "4", new Point(100,  10), 50, 50);
+        JButton level5Btn = FrameUtil.createButton(this, "5", new Point(100,  80), 50, 50);
+        JButton level6Btn = FrameUtil.createButton(this, "6", new Point(100,  150), 50, 50);
+
+        JButton ownBtn = FrameUtil.createButton(this, "Your Own Map", new Point(30,  height- 160), 150, 50);
+
+        JButton loadBtn=FrameUtil.createButton(this, "Read loads", new Point(150, height - 300), 100, 60);
+        JButton newmapBtn=FrameUtil.createButton(this, "New map", new Point(30, height - 300), 100, 60);
+
+        JButton steprankBtn= FrameUtil.createButton(this, "Step rank", new Point(30, height - 230), 100, 60);
 
         level1Btn.addActionListener(l->{
             MapMatrix mapMatrix =null;
@@ -66,8 +85,8 @@ public class LevelFrame extends JFrame {
                 }
             }
             MapSave orisave=new MapSave(new MapMatrix(temmat));
-            LoadSave loadSave=new LoadSave(NowName);
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this);
+            LoadSave loadSave=new LoadSave(NowName,1);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this,1);
             this.gameFrame = gameFrame;
             gameFrame.setPlayerName(NowName);
             gameFrame.setPlayerManager(this.playerManager);
@@ -102,8 +121,8 @@ public class LevelFrame extends JFrame {
                 }
             }
             MapSave orisave=new MapSave(new MapMatrix(temmat));
-            LoadSave loadSave=new LoadSave(NowName);
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this);
+            LoadSave loadSave=new LoadSave(NowName,2);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this,2);
             this.gameFrame = gameFrame;
             gameFrame.setPlayerName(this.NowName);
             gameFrame.setPlayerManager(this.playerManager);
@@ -138,8 +157,8 @@ public class LevelFrame extends JFrame {
                 }
             }
             MapSave orisave=new MapSave(new MapMatrix(temmat));
-            LoadSave loadSave=new LoadSave(NowName);
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this);
+            LoadSave loadSave=new LoadSave(NowName,3);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this,3);
             this.gameFrame = gameFrame;
             gameFrame.setPlayerName(this.NowName);
             gameFrame.setPlayerManager(this.playerManager);
@@ -174,8 +193,8 @@ public class LevelFrame extends JFrame {
                 }
             }
             MapSave orisave=new MapSave(new MapMatrix(temmat));
-            LoadSave loadSave=new LoadSave(NowName);
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this);
+            LoadSave loadSave=new LoadSave(NowName,4);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this,4);
             this.gameFrame = gameFrame;
             gameFrame.setPlayerName(this.NowName);
             gameFrame.setPlayerManager(this.playerManager);
@@ -210,8 +229,8 @@ public class LevelFrame extends JFrame {
                 }
             }
             MapSave orisave=new MapSave(new MapMatrix(temmat));
-            LoadSave loadSave=new LoadSave(NowName);
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this);
+            LoadSave loadSave=new LoadSave(NowName,5);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this,5);
             this.gameFrame = gameFrame;
             gameFrame.setPlayerName(this.NowName);
             gameFrame.setPlayerManager(this.playerManager);
@@ -246,8 +265,8 @@ public class LevelFrame extends JFrame {
                 }
             }
             MapSave orisave=new MapSave(new MapMatrix(temmat));
-            LoadSave loadSave=new LoadSave(NowName);
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this);
+            LoadSave loadSave=new LoadSave(NowName,6);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this,6);
             this.gameFrame = gameFrame;
             gameFrame.setPlayerName(this.NowName);
             gameFrame.setPlayerManager(this.playerManager);
@@ -256,7 +275,58 @@ public class LevelFrame extends JFrame {
             gameFrame.setVisible(true);
         });
 
-        level7Btn.addActionListener(l->{
+        steprankBtn.addActionListener(l -> {
+            JDialog dialog = new JDialog(this, "Step Ranking", true);  // true: 模态对话框
+            dialog.setLayout(new BorderLayout());  // 使用边界布局
+
+            // 创建列名数组
+            String[] columnNames = {"Level", "Player Name", "Min Steps"};
+
+            // 创建一个集合来存储表格数据
+            List<Object[]> tableData = new ArrayList<>();
+
+            // 假设playerManager.getminstep(i)返回的是每个关卡的最小步数和对应玩家名
+            for (int i = 1; i <= 6; i++) {
+                String mindata = playerManager.getminstep(i);  // 获取该关卡的最小步数信息
+                if (mindata != null) {
+                    // 假设mindata的格式是： "playerName,minSteps"
+                    String[] parts = mindata.split(",");
+                    if (parts.length == 2) {
+                        String playerName = parts[0];
+                        int minSteps = Integer.parseInt(parts[1]);
+
+                        // 将关卡编号、玩家名、最小步数作为一行数据添加到表格数据集合中
+                        if(minSteps!=100000)tableData.add(new Object[]{i, playerName, minSteps});
+                    }
+                }
+            }
+
+            // 将表格数据转换为二维数组格式
+            Object[][] data = new Object[tableData.size()][3];
+            for (int i = 0; i < tableData.size(); i++) {
+                data[i] = tableData.get(i);
+            }
+
+            // 创建表格模型，并将数据和列名传入
+            JTable table = new JTable(data, columnNames);
+
+            // 创建表格的滚动面板，以便如果数据过多可以滚动查看
+            JScrollPane scrollPane = new JScrollPane(table);
+            dialog.add(scrollPane, BorderLayout.CENTER);  // 添加到对话框的中央
+
+            // 添加关闭按钮
+            JButton closeButton = new JButton("Close");
+            closeButton.addActionListener(ev -> dialog.dispose());  // 关闭对话框
+            dialog.add(closeButton, BorderLayout.SOUTH);  // 添加到对话框的底部
+
+            // 设置对话框的尺寸和位置
+            dialog.setSize(400, 300);  // 适当调整尺寸
+            dialog.setLocationRelativeTo(this);  // 将弹窗定位在主窗口中心
+            dialog.setVisible(true);  // 显示对话框
+        });
+
+
+        ownBtn.addActionListener(l->{
 
         });
 
@@ -300,8 +370,8 @@ public class LevelFrame extends JFrame {
     public void startGame(int[][] temmat){
         MapMatrix mapMatrix=new MapMatrix(temmat);
         MapSave orisave=new MapSave(new MapMatrix(temmat));
-        LoadSave loadSave=new LoadSave(NowName);
-        GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this);
+        LoadSave loadSave=new LoadSave(NowName,0);
+        GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this,0);
         this.gameFrame = gameFrame;
         gameFrame.setPlayerName(this.NowName);
         gameFrame.setPlayerManager(this.playerManager);

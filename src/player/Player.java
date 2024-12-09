@@ -16,6 +16,8 @@ public  class Player implements Serializable {
     private int hasWin;
     private int Cntload;
     private List<LoadSave> loads;
+    private int[] levelstate;
+    private int[] levelstep;
 
     public Player(int id, String name, String password,PlayerType type) {
         this.id = id;
@@ -25,6 +27,12 @@ public  class Player implements Serializable {
         this.hasWin = 0;
         this.Cntload = 0;
         this.loads = new ArrayList<LoadSave>();
+        this.levelstate = new int[10];
+        this.levelstep = new int[10];
+        for(int i=0;i<=8;i++){
+            this.levelstate[i] = 0;
+            this.levelstep[i] = 100000;
+        }
     }
 
     public void onNotify() {
@@ -44,8 +52,18 @@ public  class Player implements Serializable {
         return this.type;
     }
 
-    public void win() {
-        this.hasWin++;
+    public void win(int levelid,int step) {
+        if(levelid==0)return;
+        if(levelstate[levelid]==0){
+            levelstate[levelid]=1;
+            this.hasWin++;
+        }
+        if(levelstep[levelid]>step){levelstep[levelid]=step;}
+    }
+
+    public int getstep(int levelid){
+        if(levelstep==null)return 100000;
+        return levelstep[levelid];
     }
 
     public int getCntload() {

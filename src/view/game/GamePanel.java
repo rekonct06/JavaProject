@@ -27,6 +27,7 @@ public class GamePanel extends ListenerPanel {
     private JLabel stepLabel;
     private int steps;
     private final int GRID_SIZE = 50;
+    private int levelid;
 
     private Hero hero;
 
@@ -35,13 +36,14 @@ public class GamePanel extends ListenerPanel {
     private GameFrame gameFrame;
     private LoadSave loadSave;
 
-    public GamePanel(MapMatrix model, MapSave originalModel, GameFrame gameFrame, LoadSave loadSave ,JLabel stepLabel) {
+    public GamePanel(MapMatrix model, MapSave originalModel, GameFrame gameFrame, LoadSave loadSave ,JLabel stepLabel,int levelid) {
         this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
         this.setSize(model.getWidth() * GRID_SIZE + 4, model.getHeight() * GRID_SIZE + 4);
         this.stepLabel = stepLabel;
         this.gameFrame = gameFrame;
+        this.levelid = levelid;
 
         this.controller = new GameController(this, model);
         if(loadSave.getmapnum()==0){
@@ -94,7 +96,7 @@ public class GamePanel extends ListenerPanel {
             controller.changeModelto(imap);
             afterMove();
             System.out.println("Fresh");
-            pausefor(400);
+        //    pausefor(400);
         }
     }
 
@@ -141,7 +143,7 @@ public class GamePanel extends ListenerPanel {
             System.out.println("WIN!");
             gameFrame.WinDialog();
             if(!PlayerName.equals("Visitor")){
-                playerManager.PlayerWin(this.PlayerName);
+                playerManager.PlayerWin(this.PlayerName,this.levelid,this.steps);
                 playerManager.updateData();
             }
             //有待完善
@@ -159,6 +161,7 @@ public class GamePanel extends ListenerPanel {
     public void doMoveRight() {
         System.out.println("Click VK_RIGHT");
         if (controller.doMove(hero.getRow(), hero.getCol(), Direction.RIGHT)) {
+            hero.setDirection(Direction.RIGHT);
             this.afterMove();
             int[][] temmat=new int[model.getHeight()][model.getWidth()];
             for(int i=0;i<model.getHeight();i++){
@@ -175,6 +178,7 @@ public class GamePanel extends ListenerPanel {
     public void doMoveLeft() {
         System.out.println("Click VK_LEFT");
         if(controller.doMove(hero.getRow(), hero.getCol(), Direction.LEFT)){
+            hero.setDirection(Direction.LEFT);
             this.afterMove();
             int[][] temmat=new int[model.getHeight()][model.getWidth()];
             for(int i=0;i<model.getHeight();i++){
@@ -191,7 +195,8 @@ public class GamePanel extends ListenerPanel {
     public void doMoveUp() {
         System.out.println("Click VK_Up");
         if( controller.doMove(hero.getRow(), hero.getCol(), Direction.UP)){
-           this.afterMove();
+            hero.setDirection(Direction.UP);
+            this.afterMove();
             int[][] temmat=new int[model.getHeight()][model.getWidth()];
             for(int i=0;i<model.getHeight();i++){
                 for(int j=0;j<model.getWidth();j++){
@@ -207,6 +212,7 @@ public class GamePanel extends ListenerPanel {
     public void doMoveDown() {
         System.out.println("Click VK_DOWN");
         if(controller.doMove(hero.getRow(), hero.getCol(), Direction.DOWN)){
+            hero.setDirection(Direction.DOWN);
             this.afterMove();
             int[][] temmat=new int[model.getHeight()][model.getWidth()];
             for(int i=0;i<model.getHeight();i++){

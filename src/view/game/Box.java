@@ -1,26 +1,47 @@
 package view.game;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Box extends JComponent {
     private int row;
     private int col;
     private final int value = 10;
 
+    private ImageIcon boxImage;
+
     public Box(int width, int height, int row, int col) {
         this.row = row;
         this.col = col;
         this.setSize(width, height);
         this.setLocation(5, 5);
+
+        try {
+            boxImage = new ImageIcon(ImageIO.read(new File("src/image/box.jpg")));
+            boxImage = new ImageIcon(boxImage.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to load box image");
+        }
     }
 
     public void paintComponent(Graphics g) {
+        /*
         g.setColor(Color.ORANGE);
         g.fillRect(0, 0, getWidth(), getHeight());
         Border border = BorderFactory.createLineBorder(Color.black, 1);
         this.setBorder(border);
+         */
+
+        super.paintComponent(g);
+        if (boxImage != null) {
+            g.drawImage(boxImage.getImage(), 0, 0, 50, 50, this);
+
+        }
     }
 
     public int getValue() {

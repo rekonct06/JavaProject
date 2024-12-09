@@ -1,13 +1,23 @@
 package view.game;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class GridComponent extends JComponent {
     private int row;
     private int col;
     private int id; // represents the units digit value. It cannot be changed during one game.
+
+    private ImageIcon emptyGroundImage; // 空地图片
+    private ImageIcon wallImage; // 墙
+    private ImageIcon targetImage; // 目标位置图片
+    private ImageIcon boxOnTargetImage;
+
+    private static final int GRID_SIZE = 50; // 假设格子大小为50x50像素
 
     private Hero hero;
     private Box box;
@@ -19,6 +29,15 @@ public class GridComponent extends JComponent {
         this.row = row;
         this.col = col;
         this.id = id;
+        try {
+            emptyGroundImage = new ImageIcon(ImageIO.read(new File("src/image/空地.png")));
+            wallImage = new ImageIcon(ImageIO.read(new File("src/image/wall1.jpg")));
+            targetImage = new ImageIcon(ImageIO.read(new File("src/image/1.jpg")));
+            //boxOnTargetImage = new ImageIcon(ImageIO.read(new File("C:\\Users\\lenovo\\IdeaProjects\\JavaProject\\src\\image\\Down.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to load grid images");
+        }
     }
 
     @Override
@@ -26,6 +45,7 @@ public class GridComponent extends JComponent {
         super.printComponents(g);
         Color borderColor = color;
         switch (id % 10) {
+            /*
             case 1:
                 g.setColor(Color.LIGHT_GRAY);
                 g.fillRect(0, 0, getWidth(), getHeight());
@@ -44,6 +64,16 @@ public class GridComponent extends JComponent {
                 g.fillPolygon(xPoints, yPoints, 4);
                 g.setColor(Color.BLACK);
                 g.drawPolygon(xPoints, yPoints, 4);
+                break;
+             */
+            case 1:
+            g.drawImage(wallImage.getImage(), 0, 0, GRID_SIZE, GRID_SIZE, this);
+            break;
+            case 0:
+                g.drawImage(emptyGroundImage.getImage(), 0, 0, GRID_SIZE, GRID_SIZE, this);
+                break;
+            case 2:
+                g.drawImage(targetImage.getImage(), 0, 0, getWidth(), getHeight(), this);
                 break;
             case 3:
                 g.setColor(Color.WHITE);

@@ -41,7 +41,7 @@ public class GameFrame extends JFrame {
 
     private LoadSave loadSave;
 
-    public GameFrame(int width, int height, MapMatrix mapMatrix, MapSave orimapsave, LoadSave loadSave ,PlayerManager playerManager, String playerName, LevelFrame levelFrame) {
+    public GameFrame(int width, int height, MapMatrix mapMatrix, MapSave orimapsave, LoadSave loadSave ,PlayerManager playerManager, String playerName, LevelFrame levelFrame,int levelid) {
         this.setTitle("2024 CS109 Project Demo");
         this.setLayout(null);
         this.setSize(width+50, height+50);
@@ -68,7 +68,7 @@ public class GameFrame extends JFrame {
         this.levelFrame.setVisible(false);
 
 
-        gamePanel = new GamePanel(mapMatrix, orimapsave ,this, loadSave, stepLabel);
+        gamePanel = new GamePanel(mapMatrix, orimapsave ,this, loadSave, stepLabel,levelid);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         gamePanel.setGameFrame(this);
         gamePanel.setPlayerManager(playerManager);

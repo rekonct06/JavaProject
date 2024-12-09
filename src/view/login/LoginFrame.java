@@ -7,8 +7,10 @@ import view.FrameUtil;
 import view.level.LevelFrame;
 import view.sound.AudioPlayer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.concurrent.Future;
 
@@ -33,13 +35,21 @@ public class LoginFrame extends JFrame {
         this.setTitle("Login Frame");
         this.setLayout(null);
         this.setSize(width, height);
+        try {
+            BufferedImage bg = ImageIO.read(new File("src/image/bg1.png")); // 替换为实际的绝对路径
+            JLabel backgroundLabel = new JLabel(new ImageIcon(bg));
+            backgroundLabel.setBounds(10, 0, 400, 500);
+            this.add(backgroundLabel); // 添加背景标签到窗口
+            this.setContentPane(backgroundLabel); // 设置窗口的内容面板为背景标签
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to load background image");
+        }
 
         // 调用 playBgm 方法来播放背景音乐
 
         String bgmPath = "data/sound/bgm.wav";
-
         Future<?> future = AudioPlayer.playBgm(bgmPath);
-        System.out.println("Audio started: " + future.isDone());
 
 
 
@@ -55,22 +65,24 @@ public class LoginFrame extends JFrame {
         rankwinBtn = FrameUtil.createButton(this, "Rank", new Point(40, 260), 100, 40);
 
 
-        try
-        {
+        try {
             FileInputStream fileIn = new FileInputStream("data/user/PlayerManager.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             Manager = (PlayerManager) in.readObject();
             in.close();
             fileIn.close();
-        }catch(IOException i)
-        {
+        } catch (FileNotFoundException fnf) {
+            // 处理文件未找到的情况
+            System.out.println("Error: The file PlayerManager.ser was not found.");
+            fnf.printStackTrace();
+        } catch (IOException i) {
+            // 处理 IO 异常
+            System.out.println("Error: An error occurred while reading the file.");
             i.printStackTrace();
-            return;
-        }catch(ClassNotFoundException c)
-        {
-            System.out.println("PlayerManager class not found");
+        } catch (ClassNotFoundException c) {
+            // 处理类找不到的异常
+            System.out.println("Error: PlayerManager class not found.");
             c.printStackTrace();
-            return;
         }
         if(Manager==null)Manager=new PlayerManager();
 
@@ -160,6 +172,7 @@ public class LoginFrame extends JFrame {
             NowPlayer = new Player(0, "Visitor", "Visitor", VISITOR);
             this.setNowName("Visitor");
             if (this.levelFrame != null) {
+                this.levelFrame.setPlayerManager(Manager);
                 this.levelFrame.setNowName("Visitor");
                 this.levelFrame.setVisible(true);
                 this.setVisible(false);
@@ -171,25 +184,41 @@ public class LoginFrame extends JFrame {
         });
 
         rankwinBtn.addActionListener(e -> {
-            Manager.sortPlayersByWins();
-            JDialog dialog = new JDialog(this, "Ranking", true);  // true: modal dialog
-            dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));  // 垂直布局
+            Manager.sortPlayersByWins();  // 排序玩家
 
-            // 遍历排序后的玩家列表并构建JLabel显示文本
-            for (Player player : Manager.getPlayers()) {
-                String playerInfo = player.getName() + ": Wins = " + player.gethasWin();
-                dialog.add(new JLabel(playerInfo));
+            // 创建对话框
+            JDialog dialog = new JDialog(this, "Ranking", true);  // true: 模态对话框
+            dialog.setLayout(new BorderLayout());  // 使用边界布局
+
+            // 创建列名数组
+            String[] columnNames = {"Player Name", "Wins"};
+
+            // 获取排序后的玩家数据
+            Object[][] data = new Object[Manager.getPlayers().size()][2];
+            for (int i = 0; i < Manager.getPlayers().size(); i++) {
+                Player player = Manager.getPlayers().get(i);
+                data[i][0] = player.getName();
+                data[i][1] = player.gethasWin();
             }
+
+            // 创建表格模型，并将数据和列名传入
+            JTable table = new JTable(data, columnNames);
+
+            // 创建表格的滚动面板，以便如果数据过多可以滚动查看
+            JScrollPane scrollPane = new JScrollPane(table);
+            dialog.add(scrollPane, BorderLayout.CENTER);  // 添加到对话框的中央
 
             // 添加关闭按钮
             JButton closeButton = new JButton("Close");
             closeButton.addActionListener(ev -> dialog.dispose());  // 关闭对话框
-            dialog.add(closeButton);
+            dialog.add(closeButton, BorderLayout.SOUTH);  // 添加到对话框的底部
 
-            dialog.setSize(250, 200);
+            // 设置对话框的尺寸和位置
+            dialog.setSize(300, 250);
             dialog.setLocationRelativeTo(this);  // 将弹窗定位在主窗口中心
-            dialog.setVisible(true);
+            dialog.setVisible(true);  // 显示对话框
         });
+
 
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

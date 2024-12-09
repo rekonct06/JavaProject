@@ -99,8 +99,8 @@ public class NewMapFrame extends JFrame {
                         System.out.println();
                     }
                     MapSave orisave=new MapSave(mapMatrix);
-                    LoadSave loadSave=new LoadSave(NowName);
-                    GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,levelFrame);
+                    LoadSave loadSave=new LoadSave(NowName,0);
+                    GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,levelFrame,0);
                     gameFrame.setPlayerName(this.NowName);
                     gameFrame.setPlayerManager(this.playerManager);
                     gameFrame.setLevelFrame(levelFrame);

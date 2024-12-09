@@ -9,7 +9,20 @@ import java.io.*;
 public class Game {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-        //    PlayerManager players=null;
+
+
+
+            LoginFrame loginFrame = new LoginFrame(340,600);
+            loginFrame.setVisible(true);
+            LevelFrame levelFrame = new LevelFrame(340,600);
+            levelFrame.setVisible(false);
+            loginFrame.setLevelFrame(levelFrame);
+            levelFrame.setLoginFrame(loginFrame);
+        });
+    }
+}
+
+//    PlayerManager players=null;
             /*
             try
             {
@@ -29,15 +42,3 @@ public class Game {
                 return;
             }
              */
-
-
-
-            LoginFrame loginFrame = new LoginFrame(280,350);
-            loginFrame.setVisible(true);
-            LevelFrame levelFrame = new LevelFrame(680,300);
-            levelFrame.setVisible(false);
-            loginFrame.setLevelFrame(levelFrame);
-            levelFrame.setLoginFrame(loginFrame);
-        });
-    }
-}
