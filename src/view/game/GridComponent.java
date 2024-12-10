@@ -24,7 +24,7 @@ public class GridComponent extends JComponent {
     private Hero hero;
     private Box box;
     private Temp temp;
-    static Color color = new Color(246, 246, 229);
+    private static Color color = new Color(246, 246, 229);
 
     public GridComponent(int row, int col, int id, int gridSize) {
         this.setSize(gridSize, gridSize);

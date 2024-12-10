@@ -47,7 +47,6 @@ public class NewMapPanel extends ListenerPanel{
                     grids[i][j].repaint();
                 }
                 if(grids[i][j].getTemp()!=null){
-                    System.out.println("remove a temp");
                     grids[i][j].removeTempFromGrid();
                     grids[i][j].revalidate();
                     grids[i][j].repaint();
@@ -72,10 +71,10 @@ public class NewMapPanel extends ListenerPanel{
                 else deltemp=model.getId(i, j);
                 switch (deltemp/ 10) {
                     case 1:
-                        grids[i][j].setBoxInGrid(new Box(GRID_SIZE - 10, GRID_SIZE - 10, i, j));
+                        grids[i][j].setBoxInGrid(new Box(GRID_SIZE , GRID_SIZE , i, j));
                         break;
                     case 2:
-                        Hero hero = new Hero(GRID_SIZE - 16, GRID_SIZE - 16, i, j);
+                        Hero hero = new Hero(GRID_SIZE, GRID_SIZE, i, j);
                         grids[i][j].setHeroInGrid(hero);
                         break;
                 }

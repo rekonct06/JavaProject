@@ -106,7 +106,7 @@ public class GameController {
 
         for(int i=0;i< now.getBoxCnt();i++) {
             targetGird = view.getGridComponent(toMap.getBoxes()[i][0], toMap.getBoxes()[i][1]);
-            targetGird.setBoxInGrid(new Box(40, 40, toMap.getBoxes()[i][0], toMap.getBoxes()[i][1]));
+            targetGird.setBoxInGrid(new Box(50, 50, toMap.getBoxes()[i][0], toMap.getBoxes()[i][1]));
         }
 
         for (int i = 0; i < model.getHeight(); i++) {

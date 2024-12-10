@@ -39,7 +39,7 @@ public class Box extends JComponent {
         this.setBorder(border);
          */
 
-        super.paintComponent(g);
+    //    super.paintComponent(g);
         if (boxImage != null) {
             g.drawImage(boxImage, 0, 0, 50, 50, this);
 
