@@ -18,10 +18,10 @@ public class Box extends JComponent {
         this.row = row;
         this.col = col;
         this.setSize(width, height);
-        this.setLocation(5, 5);
+        this.setLocation(0, 0);
 
         try {
-            boxImage = new ImageIcon(ImageIO.read(new File("src/image/box.jpg")));
+            boxImage = new ImageIcon(ImageIO.read(new File("src/image/box.png")));
             boxImage = new ImageIcon(boxImage.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
         } catch (IOException e) {
             e.printStackTrace();

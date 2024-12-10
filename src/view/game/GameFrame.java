@@ -44,7 +44,7 @@ public class GameFrame extends JFrame {
     public GameFrame(int width, int height, MapMatrix mapMatrix, MapSave orimapsave, LoadSave loadSave ,PlayerManager playerManager, String playerName, LevelFrame levelFrame,int levelid) {
         this.setTitle("2024 CS109 Project Demo");
         this.setLayout(null);
-        this.setSize(width+50, height+50);
+        this.setSize(width+150, height+50);
 
 
         // 调用 playSound 方法来播放音效
@@ -55,6 +55,22 @@ public class GameFrame extends JFrame {
         this.loadSave = loadSave;
         this.playerManager = playerManager;
         this.PlayerName = playerName;
+
+        // 加载 GIF 动图
+        ImageIcon LoseGif = new ImageIcon("src/image/musicdog.gif");
+        JLabel gifLabel = new JLabel(LoseGif);
+
+        // 设置 GIF 动图的位置和大小
+        int gifX = width;  // 设置 GIF 的 x 坐标
+        int gifY = height/2;  // 设置 GIF 的 y 坐标
+        int gifWidth = LoseGif.getIconWidth();  // 获取 GIF 图像的宽度
+        int gifHeight = LoseGif.getIconHeight();  // 获取 GIF 图像的高度
+
+        // 使用 setBounds 来设置 gifLabel 的位置和大小
+        gifLabel.setBounds(gifX, 100, gifWidth, gifHeight);
+
+        // 将 gifLabel 添加到窗口中
+        this.add(gifLabel);
 
         this.CreateTimer();
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point((mapMatrix.getWidth() * 50 + 4) + 80, 30), 180, 50);
@@ -246,18 +262,29 @@ public class GameFrame extends JFrame {
 
         JDialog dialog = new JDialog(this, "Congratulations!", true);  // true: modal dialog
         dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));  // 设置对齐方式和组件间距
+
+        // 加载胜利的动图
+        ImageIcon victoryGif = new ImageIcon("src/image/victory.gif");
+        JLabel gifLabel = new JLabel(victoryGif);
+        dialog.add(gifLabel);  // 在对话框中添加 GIF 图像
+
+        // 添加文本标签
         dialog.add(new JLabel("You win!"));
+
+        // 添加返回按钮
         JButton closeButton = new JButton("Back To Menu");
         closeButton.addActionListener(ev -> {
             dialog.dispose();
             this.levelFrame.setVisible(true);
             this.dispose();
-        });  // 关闭对话框
+        });
         dialog.add(closeButton);
-        dialog.setSize(250, 150);
+
+        dialog.setSize(250, 350);  // 调整窗口大小
         dialog.setLocationRelativeTo(this);  // 将弹窗定位在主窗口中心
         dialog.setVisible(true);
     }
+
 
     public void LoseDialog(){
 
@@ -267,6 +294,10 @@ public class GameFrame extends JFrame {
 
         JDialog dialog = new JDialog(this, "Sorry", true);
         dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
+
+        ImageIcon LoseGif = new ImageIcon("src/image/sad.gif");
+        JLabel gifLabel = new JLabel(LoseGif);
+        dialog.add(gifLabel);
         dialog.add(new JLabel("You lose!"));
         JButton closeButton = new JButton("Back To Menu");
         JButton restartButton = new JButton("Restart");
@@ -282,9 +313,14 @@ public class GameFrame extends JFrame {
         });
         dialog.add(closeButton);
         dialog.add(restartButton);
-        dialog.setSize(250, 150);
+        dialog.setSize(250, 350);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
+    }
+
+    public void wintext(int levelid){
+        if(levelid==0)return;
+
     }
 
     public String getPlayerName(){

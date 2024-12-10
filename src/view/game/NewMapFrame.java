@@ -90,13 +90,17 @@ public class NewMapFrame extends JFrame {
                 else{
                     String tempath = "data/sound/win.wav";
                     Future<?> future1 = AudioPlayer.playSound(tempath);
-
+                    int temmap[][]=new int[height][width];
                     for(int i=0;i<height;i++){
                         for(int j=0;j<width;j++){
                             if(mapMatrix.getId(i,j)>=50){mapMatrix.getMatrix()[i][j]-=50;}
                             System.out.printf("%d ",mapMatrix.getMatrix()[i][j]);
+                            temmap[i][j]=mapMatrix.getId(i,j);
                         }
                         System.out.println();
+                    }
+                    if(!NowName.equals("Visitor")){
+                        playerManager.addownmap(NowName,new MapMatrix(temmap));
                     }
                     MapSave orisave=new MapSave(mapMatrix);
                     LoadSave loadSave=new LoadSave(NowName,0);

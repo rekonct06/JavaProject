@@ -24,9 +24,9 @@ public class GameController {
 
     public void restartGame() {
         System.out.println("Do restart game here");
+        changeModelto(view.getOriginalModel());
         view.resetStep();
         view.loadreset();
-        changeModelto(view.getOriginalModel()); 
     }
 
     public boolean doMove(int row, int col, Direction direction) {
@@ -157,6 +157,7 @@ public class GameController {
                 }
             }
         }
+        System.out.println("Lose!");
         return true;
     }
 

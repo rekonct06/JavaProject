@@ -1,5 +1,6 @@
 package player;
 
+import model.MapMatrix;
 import save.LoadSave;
 
 import java.io.FileOutputStream;
@@ -41,6 +42,24 @@ public class PlayerManager implements Serializable {
                 break;
             }
         }
+    }
+
+    public void addownmap(String username, MapMatrix ownmap){
+        for(Player iplayer : players) {
+            if(iplayer.getName().equals(username)){
+                iplayer.setOwnmap(ownmap);
+                return;
+            }
+        }
+    }
+
+    public MapMatrix getOwnmap(String username){
+        for(Player iplayer : players) {
+            if(iplayer.getName().equals(username)){
+                return iplayer.getOwnmap();
+            }
+        }
+        return null;
     }
 
     public void AddLoadto(String username, LoadSave iload,int loadid){

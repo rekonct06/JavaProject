@@ -327,7 +327,32 @@ public class LevelFrame extends JFrame {
 
 
         ownBtn.addActionListener(l->{
-
+            if(NowName.equals("Visitor")){
+                newdialog("Visitor can't save a map");
+            }
+            else{
+                MapMatrix mapMatrix=playerManager.getOwnmap(NowName);
+                if(mapMatrix==null){
+                    newdialog("You haven't saved a map");
+                }
+                else{
+                    int[][] temmat=new int[mapMatrix.getHeight()][mapMatrix.getWidth()];
+                    for(int i=0;i<mapMatrix.getHeight();i++){
+                        for(int j=0;j<mapMatrix.getWidth();j++){
+                            temmat[i][j]=mapMatrix.getId(i,j);
+                        }
+                    }
+                    MapSave orisave=new MapSave(new MapMatrix(temmat));
+                    LoadSave loadSave=new LoadSave(NowName,1);
+                    GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, orisave, loadSave ,playerManager, NowName,this,0);
+                    this.gameFrame = gameFrame;
+                    gameFrame.setPlayerName(NowName);
+                    gameFrame.setPlayerManager(this.playerManager);
+                    gameFrame.setLevelFrame(this);
+                    this.setVisible(false);
+                    gameFrame.setVisible(true);
+                }
+            }
         });
 
         //todo: complete other level.
@@ -380,6 +405,22 @@ public class LevelFrame extends JFrame {
         gameFrame.setVisible(true);
     }
 
+    public void newdialog(String msg){
+        JDialog dialog = new JDialog(this, "Sorry!", true);  // true: modal dialog
+        dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));  // 垂直布局
+
+        dialog.add(new JLabel(msg));
+
+        // 添加关闭按钮
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(ev -> dialog.dispose());  // 关闭对话框
+        dialog.add(closeButton);
+
+        dialog.setSize(250, 100);
+        dialog.setLocationRelativeTo(this);  // 将弹窗定位在主窗口中心
+        dialog.setVisible(true);
+    }
+
     public void setNowName(String NName){
         this.NowName=NName;
     }
@@ -400,57 +441,6 @@ public class LevelFrame extends JFrame {
         if(this.playerManager==null) System.out.println("Player manager is null");
     }
 
-    public void newDialog(){
-        JFrame frame = new JFrame("Input");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(100, 100);
-        frame.setLocationRelativeTo(null);
-
-        // 创建一个按钮，点击后弹出对话框
-        JButton button = new JButton("输入宽高");
-        JButton cloBtn = new JButton("Close");
-
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(button);
-        panel.add(Box.createVerticalStrut(10));  // 添加垂直间隔
-        panel.add(cloBtn);
-
-
-        // 按钮的事件监听
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String[] input = showInputDialog();
-                if (input != null) {
-                    try {
-                        // 将宽度和高度转换为 int 类型
-                        int width = Integer.parseInt(input[0]);
-                        int height = Integer.parseInt(input[1]);
-
-                        // 打印转换后的宽度和高度
-                        System.out.println("宽度: " + width + ", 高度: " + height);
-
-                        // 如果需要进行其他操作，可以继续处理转换后的数据
-                        frame.dispose();
-                    } catch (NumberFormatException ex) {
-                        // 如果输入无法转换为整数，给出提示
-                        JOptionPane.showMessageDialog(frame, "请输入有效的数字！", "输入错误", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-        });
-
-        cloBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
-        });
-
-        // 将按钮面板添加到窗口
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setVisible(true);
-    }
 
 
     public static String[] showInputDialog() {

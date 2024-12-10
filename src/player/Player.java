@@ -1,5 +1,6 @@
 package player;
 
+import model.MapMatrix;
 import save.LoadSave;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public  class Player implements Serializable {
     private List<LoadSave> loads;
     private int[] levelstate;
     private int[] levelstep;
+    private MapMatrix ownmap;
 
     public Player(int id, String name, String password,PlayerType type) {
         this.id = id;
@@ -29,6 +31,7 @@ public  class Player implements Serializable {
         this.loads = new ArrayList<LoadSave>();
         this.levelstate = new int[10];
         this.levelstep = new int[10];
+        this.ownmap=null;
         for(int i=0;i<=8;i++){
             this.levelstate[i] = 0;
             this.levelstep[i] = 100000;
@@ -103,5 +106,12 @@ public  class Player implements Serializable {
         for(LoadSave il:this.loads){
             if(il!=null)this.Cntload++;
         }
+    }
+
+    public void setOwnmap(MapMatrix ownmap) {
+        this.ownmap = ownmap;
+    }
+    public MapMatrix getOwnmap() {
+        return this.ownmap;
     }
 }

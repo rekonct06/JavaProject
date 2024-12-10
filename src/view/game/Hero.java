@@ -29,12 +29,12 @@ public class Hero extends JComponent {
 
         this.setPreferredSize(new Dimension(GRID_SIZE, GRID_SIZE)); // 设置预设尺寸
         this.setSize(GRID_SIZE, GRID_SIZE); // 设置尺寸
-        this.setLocation(6, 6);
+        this.setLocation(0, 0);
         try {
             upImage = new ImageIcon(ImageIO.read(new File("src/image/Up.jpg")));
             downImage = new ImageIcon(ImageIO.read(new File("src/image/Down.jpg")));
-            leftImage = new ImageIcon(ImageIO.read(new File("src/image/Left.jpg")));
-            rightImage = new ImageIcon(ImageIO.read(new File("src/image/Right.jpg")));
+            leftImage = new ImageIcon(ImageIO.read(new File("src/image/Left1.png")));
+            rightImage = new ImageIcon(ImageIO.read(new File("src/image/Right1.png")));
 
             currentImage = downImage;
         } catch (IOException e) {
