@@ -31,8 +31,8 @@ public class Hero extends JComponent {
         this.setSize(GRID_SIZE, GRID_SIZE); // 设置尺寸
         this.setLocation(0, 0);
         try {
-            upImage = new ImageIcon(ImageIO.read(new File("src/image/Up.jpg")));
-            downImage = new ImageIcon(ImageIO.read(new File("src/image/Down.jpg")));
+            upImage = new ImageIcon(ImageIO.read(new File("src/image/Up.png")));
+            downImage = new ImageIcon(ImageIO.read(new File("src/image/Down.png")));
             leftImage = new ImageIcon(ImageIO.read(new File("src/image/Left1.png")));
             rightImage = new ImageIcon(ImageIO.read(new File("src/image/Right1.png")));
 

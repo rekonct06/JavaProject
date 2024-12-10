@@ -68,11 +68,7 @@ public class GamePanel extends ListenerPanel {
                 afterMove();
                 cnt++;
             //    if(cnt==1)break;
-                System.out.println("Refresh");try {
-                Thread.sleep(300);     //设置暂停的时间
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                System.out.println("Refresh");
             }
 
         }
@@ -101,7 +97,7 @@ public class GamePanel extends ListenerPanel {
                 //Ten digit maps to Box or Hero in corresponding location in the GridComponent. (Changed value)
                 switch (model.getId(i, j) / 10) {
                     case 1:
-                        grids[i][j].setBoxInGrid(new Box(GRID_SIZE , GRID_SIZE , i, j));
+                        grids[i][j].setBoxInGrid(new Box(GRID_SIZE  , GRID_SIZE  , i, j));
                         break;
                     case 2:
                         this.hero = new Hero(GRID_SIZE , GRID_SIZE , i, j);

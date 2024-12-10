@@ -12,14 +12,15 @@ public class Box extends JComponent {
     private int col;
     private final int value = 10;
 
-    private ImageIcon boxImage;
+    private Image boxImage;
 
     public Box(int width, int height, int row, int col) {
         this.row = row;
         this.col = col;
         this.setSize(width, height);
         this.setLocation(0, 0);
-
+        boxImage = new ImageIcon("src/image/box.png").getImage();
+        /*
         try {
             boxImage = new ImageIcon(ImageIO.read(new File("src/image/box.png")));
             boxImage = new ImageIcon(boxImage.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
@@ -27,6 +28,7 @@ public class Box extends JComponent {
             e.printStackTrace();
             System.out.println("Failed to load box image");
         }
+        */
     }
 
     public void paintComponent(Graphics g) {
@@ -39,7 +41,7 @@ public class Box extends JComponent {
 
         super.paintComponent(g);
         if (boxImage != null) {
-            g.drawImage(boxImage.getImage(), 0, 0, 50, 50, this);
+            g.drawImage(boxImage, 0, 0, 50, 50, this);
 
         }
     }
